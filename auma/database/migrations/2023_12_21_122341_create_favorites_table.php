@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('favorites', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('teacher_id');
+            $table->foreignId('course_id');
             $table->timestamps();
+            
         });
     }
 

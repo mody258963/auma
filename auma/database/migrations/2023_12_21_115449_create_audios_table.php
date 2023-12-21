@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('audios', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->foreignId('courses_id');
+            $table->integer('min')->default(0);
             $table->timestamps();
         });
     }
