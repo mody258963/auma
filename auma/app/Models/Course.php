@@ -10,7 +10,21 @@ class Course extends Model
     use HasFactory;
     protected $fillable = [
         'title',
-        'teacher_id',
+        'user_id',
 
     ];
+    public function user()
+{
+  return $this->belongsTo(User::class);
+}
+public function Favorites()
+{
+  return $this->hasMany(Favorites::class);
+}
+public function audio()
+{
+  return $this->hasMany(Audio::class);
+}
+
+
 }
