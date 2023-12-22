@@ -22,6 +22,8 @@ class AudioController extends Controller
     public function store(Request $request)
     {
         $audio = Audio::create($request->all());
+        $file = $request->file('audio_file'); // l3bt f deh
+        $audio->file_path = 'audios/' . $file->store('audios'); // w deh
         return response()->json($audio, 201);
     }
 

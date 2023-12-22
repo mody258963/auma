@@ -37,9 +37,9 @@ Route::put('/courses/{course}', [CourseController::class, 'update']);
 Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
 
 
-// audios
+// audios ya s7by shyfny
 Route::get('/audios', [AudioController::class, 'index']);
 Route::get('/audios/{id}', [AudioController::class, 'show']);
-Route::post('/audios', [AudioController::class, 'store']);
+Route::post('/audios/store', [AudioController::class, 'store']);
 Route::put('/audios/{id}', [AudioController::class, 'update']);
 Route::delete('/audios/{id}', [AudioController::class, 'destroy']);

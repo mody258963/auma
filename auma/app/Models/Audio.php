@@ -13,6 +13,7 @@ class Audio extends Model
     protected $table = 'audios';
     protected $fillable = [
         'title',
+        'course_id',// hena 7tet course_id
         'file_path',
         'duration',
 
