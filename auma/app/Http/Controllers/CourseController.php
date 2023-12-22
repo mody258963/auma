@@ -21,7 +21,8 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $course = Course::create($request->all());
+        return response()->json($course);
     }
 
     /**
