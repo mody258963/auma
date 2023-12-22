@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AudioController;
+use App\Http\Controllers\CourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,11 @@ Route::get('/courses/{course}', [CourseController::class, 'show']);
 Route::put('/courses/{course}', [CourseController::class, 'update']);
 
 Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
+
+
+// audios
+Route::get('/audios', [AudioController::class, 'index']);
+Route::get('/audios/{id}', [AudioController::class, 'show']);
+Route::post('/audios', [AudioController::class, 'store']);
+Route::put('/audios/{id}', [AudioController::class, 'update']);
+Route::delete('/audios/{id}', [AudioController::class, 'destroy']);
