@@ -15,12 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::get('/course', [CourseController::class, 'index']);
+
+
+// Route::get('tt',function (){
+//  return 'asdfvv';
+// });
+
+Route::get('/courses', [CourseController::class, 'index']);
 
 Route::post('/create', [CourseController::class, 'store']);
 
-Route::get('/show/{course}', [CourseController::class, 'show']);
+Route::get('/courses/{course}', [CourseController::class, 'show']);
+
+Route::put('/courses/{course}', [CourseController::class, 'update']);
+
+Route::delete('/courses/{course}', [CourseController::class, 'destroy']);

@@ -12,8 +12,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $course = Course::all();
-        return response()->json($course);
+        $courses = Course::all();
+        return response()->json($courses);
     }
 
     /**
@@ -22,8 +22,9 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $course = Course::create($request->all());
-        return response()->json($course);
+        return response()->json($course, 201);
     }
+
 
     /**
      * Display the specified resource.
