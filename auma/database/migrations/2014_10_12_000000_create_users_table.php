@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('social_link');
             $table->string('image');
             // $table->foreignId('user_id');
-            $table->enum('role',['user','admin','teacher']);
+            $table->enum('role',['user','admin','teacher'])->default('user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
