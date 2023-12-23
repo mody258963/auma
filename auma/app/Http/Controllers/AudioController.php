@@ -21,16 +21,17 @@ class AudioController extends Controller
      */
     public function store(Request $request)
     {
-        $audio = Audio::create($request->all());
-        $file = $request->file('audio_file'); // l3bt f deh
-        $audio->file_path = 'audios/' . $file->store('audios'); // w deh
+      
+        $file = $request->file('file_path'); 
+          $audio = Audio::create($request->all());// l3bt f deh
+        $audio->file_path = 'public/' . $file->store('audios'); // w deh
         return response()->json($audio, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show( $id)
+    public function show($id)
     {
         $audio = Audio::find($id);
         return response()->json($audio);

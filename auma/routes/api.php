@@ -38,6 +38,8 @@ Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
 
 
 // audios ya s7by shyfny
+
+
 Route::get('/audios', [AudioController::class, 'index']);
 Route::get('/audios/{id}', [AudioController::class, 'show']);
 Route::post('/audios/store', [AudioController::class, 'store']);
