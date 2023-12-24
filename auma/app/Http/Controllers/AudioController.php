@@ -2,8 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AudioRequst;
 use App\Models\Audio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\API\BaseApiController;
+// look here 
+// i have many courses 
+// every course has many lectures -> their is no lectures -- lestien form me i know your idea be flixable
+// every lecture has audios or files or videos 
+// any thing i add type of media over all 
+// this type i response with it to front end to represent this content 
+// then i need add leacture with title and option description
+// overall i have three entities 
+// user -> (admin, instructor, student or user)
+// course (has many lectures) columns:(title, description, sub_description, cover, short video)
+// leactures (has mmany contents and belongs to course) columns: (name, description(option))
+// contents (belongs to lectures) columns:(content(video, audio, file),type of media)
+
+// that is very simple to generate this system without any complexity 
+
+// sorry 
+// uploding file give it a look please :)   are you still here// i here 
+// okay 
+// revesion theses comments 
+
+
 
 class AudioController extends Controller
 {
@@ -21,11 +45,48 @@ class AudioController extends Controller
      */
     public function store(Request $request)
     {
+    
+    
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string', // why we need title for audio ?
+            'file_path' => 'required', // named it ifram bz you call ifram from toutube for example 
+            'duration' => 'numeric', // what is this??????  this blackbox not me 
+            ]);
+           if( $validator->fails()){
+                return response()->json(
+                    [
+                        'success' => false,
+                        'message' => 'Some thing faild',
+                    ],400
+                );
+           } 
+            
+        // i take path 
+        // how to store path 
+        // this string ????? 
       
         $file = $request->file('file_path'); 
-          $audio = Audio::create($request->all());// l3bt f deh
-        $audio->file_path = 'public/' . $file->store('audios'); // w deh
-        return response()->json($audio, 201);
+        $audio = Audio::create($request->all());// l3bt f deh
+        $path =  $file->store('public/audios'); // here i stored in the public in storge
+        $path = str_replace('public','storage',$path);
+        $audio->file_path = $path;
+
+        // okay but you validate in this failed ("required|string") ??? 
+        // how can i store string ??
+        // i need file 
+          
+        //TODO resource // 
+        // format response 
+         return response()->json([
+            'success' => true,
+            'message' => 'Audio created successfully',
+            'data' => [
+                'id' => $audio->id,
+                'title' => $audio->title ,
+                'duration' => $audio->duration,
+                'audio' => env("APP_URL"). '/'. $audio->file_path,
+            ]
+        ], 201);
     }
 
     /**

@@ -13,16 +13,16 @@ class Audio extends Model
     protected $table = 'audios';
     protected $fillable = [
         'title',
-        'course_id',// hena 7tet course_id
+        'lecture_id',// hena 7tet course_id
         'file_path',
         'duration',
 
 
     ];
 
-public function course()
+public function lecture()
 {
-  return $this->belongsTo(Course::class);
+  return $this->belongsTo(Lecture::class);
 }
 
 

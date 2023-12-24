@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('file_path');
-            $table->foreignId('course_id'); // hena 7tet course_id
+            $table->foreignId('lecture_id'); // hena 7tet course_id
             $table->integer('duration');
             $table->timestamps();
         });

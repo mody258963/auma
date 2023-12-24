@@ -49,4 +49,4 @@ Route::delete('/audios/{id}', [AudioController::class, 'destroy']);
 
 
 Route::get('/all-user', [AuthController::class, 'index']);
-Route::post('/user/register', [AuthController::class, 'register']);
+Route::post('/user/register', [AuthController::class, 'userRegister']);

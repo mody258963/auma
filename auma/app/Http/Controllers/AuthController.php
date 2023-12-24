@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    // الووو
+    // i am here 
     /**
      * Display a listing of the resource.
      */
@@ -21,20 +23,21 @@ class AuthController extends Controller
      */
     public function userRegister(Request $request)
     {
-    
-            $this->validate($request, [
+            // TODO: make request for validate this request 
+            // or use Validator::make($request->all,[
+            // your rules 
+            // ]) 
+            $data = $request->validate([
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
                 'password' => 'required'
               ]);
-
-      
-
-          $user = User::create([
-            'name' => $request->name, 
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
-          ]);
+              // TODO use repository
+              // we don't need direct call eloquent
+          $user = User::create($data);
+            // you can refactor this to avoid redandancy 
+            // i mean make function named success in parent class of controller and inhert from this class 
+            // revision last session 
 
           return response()->json(['message'=> "User has been successfully registered!",$user],201);
     }
@@ -44,7 +47,8 @@ class AuthController extends Controller
      */
     public function show(User $user)
     {
-        //
+        // TODO use repository desgin pattern 
+        // also you make direct call to eloquent 
     }
 
     /**
@@ -52,7 +56,7 @@ class AuthController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        // TODO use repository to find model and make request to validate data
     }
 
     /**
@@ -60,6 +64,6 @@ class AuthController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        //TODO use repository 
     }
 }
