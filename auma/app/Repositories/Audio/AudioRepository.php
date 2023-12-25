@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Audio;
 
+use App\Repositories\BaseRepository;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
@@ -9,7 +10,7 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  *
  * @package namespace App\Repositories\Audio;
  */
-interface AudioRepository extends RepositoryInterface
+interface AudioRepository extends BaseRepository
 {
-    //
+    public function uplodefile($request);
 }
