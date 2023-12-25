@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Audio;
+namespace App\Repositories\Audio\Elqouent;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -21,18 +21,18 @@ class AudioRepositoryEloquent extends EloquentBaseRepository implements AudioRep
      *
      * @return string
      */
-    public function uplodefile($request)
+    public function uplodefile($data)
     {
-        $file = $request->file('file_path'); 
-        $audio = $request->all();
-        $path =  $file->store('public/audios'); // here i stored in the public in storge
-        $path = str_replace('public','storage',$path);
-        $audio->file_path = $path;
-        return $this->create($audio);
+        if($data['file_path']){
+            $path =  $data['file_path']->store('audios','public'); // here i stored in the public in storge
+            $path = 'storage/'.$path;
+            $data['file_path']= $path;
+        }
+        return $this->create($data);
     }
 
-    
 
-    
-    
+
+
+
 }

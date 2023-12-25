@@ -17,7 +17,8 @@ class AudioResourse extends JsonResource
     {
         return parent::toArray($request);
     }
-    public static function transfomer(Audio $audio){
+    public static function transformer(Audio $audio){
+
         return [
             'id' => $audio->id,
             'title' => $audio->title ,
