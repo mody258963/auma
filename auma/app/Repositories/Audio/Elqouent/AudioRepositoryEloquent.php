@@ -24,9 +24,16 @@ class AudioRepositoryEloquent extends EloquentBaseRepository implements AudioRep
     public function uplodefile($data)
     {
         if($data['file_path']){
+
+        // $path =  $data['file_path']->store('public/audios'); // here i stored in the public in storge
+        // $path = str_replace('public','storage',$path);
+        // $data['file_path'] = $path;
+
+
+
             $path =  $data['file_path']->store('audios','public'); // here i stored in the public in storge
             $path = 'storage/'.$path;
-            $data['file_path']= $path;
+            $data['file_path'] = $path;
         }
         return $this->create($data);
     }

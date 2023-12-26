@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Audio;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
-class AudioRequst extends FormRequest
+class AudioRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,8 @@ class AudioRequst extends FormRequest
     {
         return [
             'title' => 'required|string', // why we need title for audio ?
-            'file_path' => 'required', // named it ifram bz you call ifram from toutube for example 
-            'duration' => 'numeric', // what is this??????  this blackbox not me 
+            'file_path' => 'required', // named it ifram bz you call ifram from toutube for example
+            'duration' => 'numeric', // what is this??????  this blackbox not me
               ];
 
 
