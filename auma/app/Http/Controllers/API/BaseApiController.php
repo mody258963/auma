@@ -26,7 +26,7 @@ class BaseApiController extends Controller
         $formatData = [];
         foreach($data as $item)
         {
-            $formatData[] = $resource::transfomer($item);
+            $formatData[] = $resource::transformer($item);
         }
         return $formatData;
     }

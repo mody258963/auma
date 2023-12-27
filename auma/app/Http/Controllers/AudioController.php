@@ -39,11 +39,14 @@ class AudioController extends BaseApiController
     }
     public function index()
     {
-
-    $this->success($this->formatMany($this->audioRepository->all(),
-                                    'App\Http\Resources\AudioResourse'),
-                                    'all data',
-                                    200);
+        return $this->success(
+            $this->formatMany(
+                $this->audioRepository->all(),
+                'App\Http\Resources\AudioResourse'
+            ),
+            "categories retreived succssefully",
+            200
+        );
 
         // $audios = Audio::all();
         // return response()->json($audios);
@@ -54,11 +57,13 @@ class AudioController extends BaseApiController
      */
     public function store(Request $request)
     {
+    
         $data = $request->validate([
             'title' => 'required',
             'duration' => 'required',
             'file_path' => 'required',
             'lecture_id' => 'required',
+            
         ]);
 
         $audio = $this->audioRepository->uplodefile($data);
@@ -123,17 +128,35 @@ class AudioController extends BaseApiController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request , $id)
     {
-        $audio = Audio::findOrFail($id);
-        $audio->update($request->all());
-        return response()->json($audio, 200);
+        //dd($request);
+        $data = Validator::make($request->all(), [
+                'title' => 'required|string', // why we need title for audio ?
+                'file_path' => 'required', // named it ifram bz you call ifram from toutube for example
+                'duration' => 'numeric', // what is this??????  this blackbox not me
+                ]);
+         dd();
+        $audio = $this->audioRepository->find($id);
+         // $data = $audio->update($request->all());
+         //$audio = $this->audioRepository->find($id);
+         // $audio->all();
+         $this->audioRepository->updatefile($request->all(),$audio);
+         
+        // $this->audioRepository->updatefile($data);
+      //  dd($soo);
+         return response()->json($audio);
+        // $audio = $this->audioRepository->updatefile($data);
+
+        // $data = AudioResourse::transformer($audio);
+        
+        // return $this->success($data,"updated successfully",201);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         Audio::destroy($id);
         return response()->json(null, 204);

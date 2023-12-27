@@ -43,10 +43,10 @@ Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
 
 
 Route::get('/audios', [AudioController::class, 'index']);
-Route::get('/audios/{id}', [AudioController::class, 'show']);
+Route::get('/audios-show/{id}', [AudioController::class, 'show']);
 Route::post('/audios/store', [AudioController::class, 'store']);
-Route::put('/audios/{id}', [AudioController::class, 'update']);
-Route::delete('/audios/{id}', [AudioController::class, 'destroy']);
+Route::put('/audios-update/{id}', [AudioController::class, 'update']);
+Route::delete('/audios-delete/{id}', [AudioController::class, 'destroy']);
 
 
 Route::get('/all-user', [AuthController::class, 'index']);
