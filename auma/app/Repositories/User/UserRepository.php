@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Audio;
+namespace App\Repositories\User;
 
 use App\Repositories\BaseRepository;
 use Prettus\Repository\Contracts\RepositoryInterface;
@@ -10,8 +10,8 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  *
  * @package namespace App\Repositories\Audio;
  */
-interface AudioRepository extends BaseRepository
+interface UserRepository extends BaseRepository
 {
-    public function uplodefile($request);
-    public function updatefile($data, $audio);
+    public function uplodeimage($request);
+    public function updateimage($data, $user);
 }       

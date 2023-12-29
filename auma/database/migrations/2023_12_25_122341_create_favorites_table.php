@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('audios', function (Blueprint $table) {
+        Schema::create('favorites', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('file_path');
-            $table->foreignId('lecture_id'); // hena 7tet course_id
-            $table->integer('duration');
+            $table->foreignId('user_id')->constrained('users');
+           $table->foreignId('course_id')->constrained('courses');
             $table->timestamps();
+            
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('audios');
+        Schema::dropIfExists('favorites');
     }
 };

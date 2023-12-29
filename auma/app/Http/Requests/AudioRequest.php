@@ -13,7 +13,7 @@ class AudioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +24,12 @@ class AudioRequest extends FormRequest
     public function rules(): array
     {
         return [
+            [
             'title' => 'required|string', // why we need title for audio ?
-            'file_path' => 'required', // named it ifram bz you call ifram from toutube for example
-            'duration' => 'numeric', // what is this??????  this blackbox not me
+            'file_path' => 'required|file', 
+            'lecture_id' => 'required',
+            'duration' => 'numeric', 
+            ]
               ];
 
 

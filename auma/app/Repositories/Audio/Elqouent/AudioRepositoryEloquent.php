@@ -39,7 +39,7 @@ class AudioRepositoryEloquent extends EloquentBaseRepository implements AudioRep
         return $this->create($data);
     }
     
-    public function updatefile($data , $audio = null) {
+    public function updatefile($data,  $audio) {
         
        // dd($data);
         if($data['file_path']){
@@ -49,12 +49,7 @@ class AudioRepositoryEloquent extends EloquentBaseRepository implements AudioRep
             $data['file_path'] = $path;
             
        }
-       if ($audio) {
-         return $this->model->create($data);
-        
-       }
-
-      return $this->model->update($audio,$data);
+   return $this->update($audio,$data); 
 
 }
 

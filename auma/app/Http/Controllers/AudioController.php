@@ -7,6 +7,7 @@ use App\Models\Audio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\BaseApiController;
+use App\Http\Requests\AudioRequest;
 use App\Repositories\Audio\AudioRepository;
 
 // look here
@@ -48,13 +49,10 @@ class AudioController extends BaseApiController
             200
         );
 
-        // $audios = Audio::all();
-        // return response()->json($audios);
+     
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+  
     public function store(Request $request)
     {
     
@@ -72,93 +70,47 @@ class AudioController extends BaseApiController
         
         return $this->success($data,"Created successfully",201);
 
-        // $validator = Validator::make($request->all(), [
-        //     'title' => 'required|string', // why we need title for audio ?
-        //     'file_path' => 'required', // named it ifram bz you call ifram from toutube for example
-        //     'duration' => 'numeric', // what is this??????  this blackbox not me
-        //     ]);
-        //    if( $validator->fails()){
-        //         return response()->json(
-        //             [
-        //                 'success' => false,
-        //                 'message' => 'Some thing faild',
-        //             ],400
-        //         );
-        //    }
-
-        // i take path
-        // how to store path
-        // this string ?????
-
-        // $file = $request->file('file_path');
-        // $audio = Audio::create($request->all());// l3bt f deh
-        // $path =  $file->store('public/audios'); // here i stored in the public in storge
-        // $path = str_replace('public','storage',$path);
-        // $audio->file_path = $path;
-
-
-
-        // okay but you validate in this failed ("required|string") ???
-        // how can i store string ??
-        // i need file
-
-        //TODO resource //
-        // format response
-    //      return response()->json([
-    //         'success' => true,
-    //         'message' => 'Audio created successfully',
-    //         'data' => [
-    //             'id' => $audio->id,
-    //             'title' => $audio->title ,
-    //             'duration' => $audio->duration,
-    //             'audio' => env("APP_URL"). '/'. $audio->file_path,
-    //         ]
-    //     ], 201);
+        
      }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         $audio = Audio::find($id);
         return response()->json($audio);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request , $id)
     {
-        //dd($request);
         $data = Validator::make($request->all(), [
                 'title' => 'required|string', // why we need title for audio ?
-                'file_path' => 'required', // named it ifram bz you call ifram from toutube for example
+                'file_path' => 'required|file', 
+                'lecture_id' => 'required',
                 'duration' => 'numeric', // what is this??????  this blackbox not me
-                ]);
-         dd();
-        $audio = $this->audioRepository->find($id);
-         // $data = $audio->update($request->all());
-         //$audio = $this->audioRepository->find($id);
-         // $audio->all();
-         $this->audioRepository->updatefile($request->all(),$audio);
-         
-        // $this->audioRepository->updatefile($data);
-      //  dd($soo);
-         return response()->json($audio);
-        // $audio = $this->audioRepository->updatefile($data);
 
-        // $data = AudioResourse::transformer($audio);
+                ])->safe()->all();
+        $audio = $this->audioRepository->find($id);
+
         
-        // return $this->success($data,"updated successfully",201);
+     $data =  $this->audioRepository->updatefile($data,$audio);
+      
+     
+        
+        return $this->success($this->formatMany(
+            $this->audioRepository->all(),
+        'App\Http\Resources\AudioResourse'),
+        'Updated Succesfully',201);
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy($id)
     {
-        Audio::destroy($id);
-        return response()->json(null, 204);
+        $audio = $this->audioRepository->find($id);
+        $this->audioRepository->delete($audio);
+        return $this->success($this->formatMany(
+            $this->audioRepository->all(),
+        'App\Http\Resources\AudioResourse'),
+        'Updated Succesfully',201);
     }
 }

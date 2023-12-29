@@ -23,7 +23,7 @@ class AudioResourse extends JsonResource
             'id' => $audio->id,
             'title' => $audio->title ,
             'duration' => $audio->duration,
-            'audio' => 'http://127.0.0.1:8000' . '/' . $audio->file_path,
+            'audio' => env('APP_URL') . '/' . $audio->file_path,
         ];
     }
 

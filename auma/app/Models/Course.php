@@ -8,17 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory;
+
+    protected $table = 'courses';
     protected $fillable = [
         'title',
         'description',
-        'teacher_id',
         'user_id',
+        'category_id'
 
     ];
     public function user()
 {
   return $this->belongsTo(User::class);
 }
+public function category(){
+  return $this -> belongsTo(Category::class,);
+  }
+
 public function Favorites()
 {
   return $this->hasMany(Favorites::class);

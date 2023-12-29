@@ -17,7 +17,7 @@ return new class extends Migration
             $table->boolean('is_accepted')->default(false);
             $table->boolean('is_blocked')->default(false);
             $table->string('email')->unique();
-            $table->string('social_link');
+            $table->string('social_link')->nullable();
             $table->string('image');
             // $table->foreignId('user_id');
             $table->enum('role',['user','admin','teacher'])->default('user');
