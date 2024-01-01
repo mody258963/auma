@@ -143,15 +143,15 @@ public function login(Request $request)
             'confirm_email' => 'required|email|same:email', 
             'password' => 'required',
             'id' => 'required'
-            ])->safe()->all();
+            ])->validate();
 
             $user = $this->userRepository->find($id);
-            $data['id'] = $id;
             $credentials = $request->only('id','password');
+            $data['id'] = $id;
             
-        if(Auth::attempt($credentials)){
-        $request->except(['confirm_email','password','id']);
-        $data =  $this->userRepository->update($data,$user);
+            if(Auth::attempt($credentials)){
+                $request->except(['confirm_email','password','id']);
+                $this->userRepository->update($data,$user);
   
  
     

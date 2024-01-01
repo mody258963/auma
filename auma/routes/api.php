@@ -49,6 +49,9 @@ Route::get('/all-user', [AuthController::class, 'index']);
 Route::post('/user/register', [AuthController::class, 'userRegister']);
 Route::post('/teacher/register', [AuthController::class, 'teacherRegister']);
 Route::post('/admin/register', [AuthController::class, 'adminRegister']);
-Route::post('/email/change', [AuthController::class, 'emailupdate']);
+Route::post('/email/change/{id}', [AuthController::class, 'emailupdate']);
 Route::post('/user/login', [AuthController::class, 'login']);
-Route::post('/user/delet', [AuthController::class, 'destroy']);
+Route::post('/user/delet/{id}', [AuthController::class, 'destroy']);
+
+
+Route::get('/get/category/{id}', [AuthController::class, 'index']);
