@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AudioController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
 
 /*
@@ -51,7 +52,10 @@ Route::post('/teacher/register', [AuthController::class, 'teacherRegister']);
 Route::post('/admin/register', [AuthController::class, 'adminRegister']);
 Route::post('/email/change/{id}', [AuthController::class, 'emailupdate']);
 Route::post('/user/login', [AuthController::class, 'login']);
-Route::post('/user/delet/{id}', [AuthController::class, 'destroy']);
+Route::post('/user/delete/{id}', [AuthController::class, 'destroy']);
 
 
-Route::get('/get/category/{id}', [AuthController::class, 'index']);
+Route::get('/get/category', [CategoryController::class, 'index']);
+Route::get('/get/category/name', [CategoryController::class, 'getcategorybyname']);
+Route::post('/add/category', [CategoryController::class, 'addcategory']);
+Route::post('/update/category/{id}', [CategoryController::class, 'updatecategory']);

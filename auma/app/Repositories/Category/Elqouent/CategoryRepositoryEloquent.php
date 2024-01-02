@@ -9,7 +9,7 @@ use App\Entities\Category\Category;
 use Illuminate\Support\Facades\Cache;
 
 use App\Repositories\EloquentBaseRepository;
-use App\Validators\Audio\AudioValidator;
+
 
 /**
  * Class AudioRepositoryEloquent.

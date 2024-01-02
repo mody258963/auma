@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\AuthResourse;
 use App\Models\User;
+use App\Models\Course;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -162,6 +163,22 @@ public function login(Request $request)
     }else {
         return $this->error('Wrong input');
     }
+    }
+
+    public function getcousebyteachername(Request $request)
+    {
+        $categoryName = $request->input('title');
+    
+        $category = Course::query();
+    
+        if ($categoryName) {
+            $category->join('categories', 'categories.id', '=', 'courses.user_id')
+            ->where('categories.title', $categoryName);
+        }
+    
+        $filteredcategory = $category->get();
+    
+        return response()->json(['category' => $filteredcategory]);
     }
 
     public function destroy($id)

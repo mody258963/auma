@@ -23,7 +23,7 @@ class CategoryController extends BaseApiController
         return $this->success(
             $this->formatMany(
                 $this->categoryRepository->all(),
-                'App\Http\Resources\AudioResourse'
+                'App\Http\Resources\CategoryResourse'
             ),
             "categories retreived succssefully",
             200
@@ -33,21 +33,22 @@ class CategoryController extends BaseApiController
     }
 
 
-    public function getcategory(Request $request)
+    public function getcategorybyname(Request $request)
     {
-        $categoryId = $request->input('category_id');
+        $categoryName = $request->input('title');
     
-        $products = Course::query();
+        $category = Course::query();
     
-        if ($categoryId) {
-            $products->where('category_id', $categoryId);
+        if ($categoryName) {
+            $category->join('categories', 'categories.id', '=', 'courses.category_id')
+            ->where('categories.title', $categoryName);
         }
     
-        $filteredProducts = $products->get();
+        $filteredcategory = $category->get();
     
-        return response()->json(['products' => $filteredProducts]);
+        return response()->json(['category' => $filteredcategory]);
     }
-    
+
     public function addcategory(Request $request) {
         $data = Validator::make($request->all(), [
             'title' => 'required', // why we need title for user ?
@@ -59,4 +60,16 @@ class CategoryController extends BaseApiController
 
     }
     
+    public function updatecategory(Request $request , $id) {
+        $data = Validator::make($request->all(), [
+            'title' => 'required', // why we need title for user ?
+            ])->validate();
+            $category = $this->categoryRepository->find($id);
+            
+
+            $data = $this->categoryRepository->update($category,$data);
+            
+            return $this->success($data,'Category is added',201);
+
+    }
 }
