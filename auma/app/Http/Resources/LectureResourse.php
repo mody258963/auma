@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Lecture;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,4 +17,12 @@ class LectureResourse extends JsonResource
     {
         return parent::toArray($request);
     }
+    public static function transformer(Lecture $lecture){
+
+        return [
+            'title' => $lecture->title ,
+            'description' => $lecture->description,
+        ];
+    }
 }
+

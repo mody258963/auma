@@ -59,3 +59,9 @@ Route::get('/get/category', [CategoryController::class, 'index']);
 Route::get('/get/category/name', [CategoryController::class, 'getcategorybyname']);
 Route::post('/add/category', [CategoryController::class, 'addcategory']);
 Route::post('/update/category/{id}', [CategoryController::class, 'updatecategory']);
+
+
+Route::get('/get/course', [CourseController::class, 'index']);
+Route::get('/get/{user}/courses', [CourseController::class, 'getCoursebyuserid']);
+Route::post('/add/course', [CourseController::class, 'addcourse']);
+Route::post('/update/course/{id}', [CourseController::class, 'updatecourse']);
