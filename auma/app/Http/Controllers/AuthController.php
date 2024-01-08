@@ -148,8 +148,8 @@ public function login(Request $request)
             ])->validate();
 
             $user = $this->userRepository->find($id);
-            $credentials = $request->only('id','password');
             $data['id'] = $id;
+            $credentials = $request->only('id','password');
             
             if(Auth::attempt($credentials)){
                 $request->except(['confirm_email','password','id']);
@@ -166,21 +166,21 @@ public function login(Request $request)
     }
     }
 
-    public function getcousebyteachername(Request $request)
-    {
-        $categoryName = $request->input('title');
+    // public function getcousebyteachername(Request $request)
+    // {
+    //     $categoryName = $request->input('title');
     
-        $category = Course::query();
+    //     $category = Course::query();
     
-        if ($categoryName) {
-            $category->join('categories', 'categories.id', '=', 'courses.user_id')
-            ->where('categories.title', $categoryName);
-        }
+    //     if ($categoryName) {
+    //         $category->join('categories', 'categories.id', '=', 'courses.user_id')
+    //         ->where('categories.title', $categoryName);
+    //     }
     
-        $filteredcategory = $category->get();
+    //     $filteredcategory = $category->get();
     
-        return response()->json(['category' => $filteredcategory]);
-    }
+    //     return response()->json(['category' => $filteredcategory]);
+    // }
 
     public function destroy($id)
     {

@@ -46,7 +46,7 @@ class CategoryController extends BaseApiController
     
         $filteredcategory = $category->get();
     
-        return response()->json(['category' => $filteredcategory]);
+        return response()->json($filteredcategory);
     }
 
     public function addcategory(Request $request) {

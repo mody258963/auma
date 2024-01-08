@@ -4,13 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Lecture;
 use Illuminate\Http\Request;
+use App\Http\Controllers\API\BaseApiController;
+use App\Repositories\Lecture\LectureRepository;
 
-class LectureController extends Controller
+class LectureController extends BaseApiController
 {
+
+    public function __construct(private LectureRepository $lectureRepository)
+    {
+        $this->lectureRepository = $lectureRepository;
+    }
+
     public function index()
     {
-        $courses = Lecture::all();
-        return response()->json($courses);
+      
+        $data = $this->formatMany($this->lectureRepository->all(),'App\Http\Resources\LectureResourse');
+        return response()->json($data);
+
+
     }
 
     /**
@@ -18,33 +29,33 @@ class LectureController extends Controller
      */
     public function store(Request $request)
     {
-        $course = Lecture::create($request->all());
-        return response()->json($course, 201);
+        $lecture = Lecture::create($request->all());
+        return response()->json($lecture, 201);
     }
 
 
     /**
      * Display the specified resource.
      */
-    public function show(Lecture $course)
+    public function show(Lecture $lecture)
     {
-        return response()->json($course);
+        return response()->json($lecture);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Lecture $course)
+    public function update(Request $request, Lecture $lecture)
     {
-        $course->update($request->all());
-        return response()->json($course);
+        $lecture->update($request->all());
+        return response()->json($lecture);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Lecture $course)
+    public function destroy(Lecture $lecture)
     {
-        $course->delete();
+        $lecture->delete();
         return response()->json(null, 204);
     }}
