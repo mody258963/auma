@@ -22,8 +22,9 @@ class AuthResourse extends JsonResource
     public static function transformer(User $user){
 
         return [
-            'name' => $user->id,
-            'email' => $user->title ,
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email ,
             'image' => env('APP_URL') . '/' . $user->image,
             'password' =>  Hash::make($user->password),
             'is_blocked' => $user->is_blocked , 

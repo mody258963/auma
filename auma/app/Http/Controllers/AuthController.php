@@ -30,15 +30,16 @@ class AuthController extends BaseApiController
     }
     public function index()
     {
-        return $this->success(
-            $this->formatMany(
-                $this->userRepository->all(),
-                'App\Http\Resources\AuthResourse'
-            ),
-            "categories retreived succssefully",
-            200
-        );
-
+        // return $this->success(
+        //     $this->formatMany(
+        //         $this->userRepository->all(),
+        //         'App\Http\Resources\AuthResourse'
+        //     ),
+        //     "categories retreived succssefully",
+        //     200
+        // );
+        $data = $this->formatMany($this->userRepository->all(), 'App\Http\Resources\AuthResourse');
+        return response()->json($data);
     }
 
     /**
