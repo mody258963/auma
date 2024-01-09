@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lecture;
 use Illuminate\Http\Request;
+use App\Http\Resources\LectureResourse;
 use App\Http\Controllers\API\BaseApiController;
 use App\Repositories\Lecture\LectureRepository;
 
@@ -31,6 +32,7 @@ class LectureController extends BaseApiController
     {
         $lecture = Lecture::create($request->all());
         return response()->json($lecture, 201);
+
     }
 
 
@@ -39,7 +41,8 @@ class LectureController extends BaseApiController
      */
     public function show(Lecture $lecture)
     {
-        return response()->json($lecture);
+        // return response()->json($lecture);
+        return LectureResourse::make($lecture);
     }
 
     /**
