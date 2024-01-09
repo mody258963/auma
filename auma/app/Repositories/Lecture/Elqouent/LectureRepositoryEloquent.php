@@ -2,13 +2,13 @@
 
 namespace App\Repositories\Lecture\Elqouent;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\Lecture\LectureRepository;
 use App\Entities\Lecture\Lecture;
 use Illuminate\Support\Facades\Cache;
-
+use App\Repositories\LectureRepository;
 use App\Repositories\EloquentBaseRepository;
+use Prettus\Repository\Eloquent\BaseRepository;
+
+use Prettus\Repository\Criteria\RequestCriteria;
 
 
 /**
