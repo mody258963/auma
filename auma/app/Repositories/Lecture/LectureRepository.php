@@ -5,6 +5,7 @@ namespace App\Repositories\Lecture;
 use App\Repositories\BaseRepository;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
+
 /**
  * Interface AudioRepository.
  *
@@ -12,5 +13,6 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface LectureRepository extends BaseRepository
 {
-    
-}       
+
+
+}

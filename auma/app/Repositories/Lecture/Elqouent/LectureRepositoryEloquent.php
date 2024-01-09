@@ -5,7 +5,7 @@ namespace App\Repositories\Lecture\Elqouent;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\Lecture\LectureRepository;
-use App\Entities\Category\Lecture;
+use App\Entities\Lecture\Lecture;
 use Illuminate\Support\Facades\Cache;
 
 use App\Repositories\EloquentBaseRepository;
