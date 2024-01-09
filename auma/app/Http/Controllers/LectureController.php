@@ -17,7 +17,7 @@ class LectureController extends BaseApiController
 
     public function index()
     {
-      
+
         $data = $this->formatMany($this->lectureRepository->all(),'App\Http\Resources\LectureResourse');
         return response()->json($data);
 

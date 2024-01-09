@@ -1,36 +1,16 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Lecture;
 
-use App\Models\Lecture;
+use App\Repositories\BaseRepository;
+use Prettus\Repository\Contracts\RepositoryInterface;
 
-class LectureRepository
+/**
+ * Interface AudioRepository.
+ *
+ * @package namespace App\Repositories\Audio;
+ */
+interface LectureRepository extends BaseRepository
 {
-    public function getAll()
-    {
-        return Lecture::all();
-    }
 
-    public function getById($id)
-    {
-        return Lecture::findOrFail($id);
-    }
-
-    public function create(array $data)
-    {
-        return Lecture::create($data);
-    }
-
-    public function update($id, array $data)
-    {
-        $lecture = Lecture::findOrFail($id);
-        $lecture->update($data);
-        return $lecture;
-    }
-
-    public function delete($id)
-    {
-        $lecture = Lecture::findOrFail($id);
-        $lecture->delete();
-    }
 }
