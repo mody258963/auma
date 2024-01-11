@@ -14,4 +14,6 @@ interface UserRepository extends BaseRepository
 {
     public function uplodeimage($request);
     public function updateimage($data, $user);
-}       
+
+    
+}

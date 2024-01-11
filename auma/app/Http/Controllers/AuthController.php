@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\AuthResourse;
 use App\Models\User;
 use App\Models\Course;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use App\Repositories\User\UserRepository;
-use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
-use App\Http\Controllers\API\BaseApiController;
-use Illuminate\Support\Facades\Hash;
+use App\Models\PasswordReset;
 use Laravel\Sanctum\HasApiTokens;
+use App\Http\Resources\AuthResourse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use App\Repositories\User\UserRepository;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Contracts\Auth\UserProvider;
+use App\Http\Controllers\API\BaseApiController;
 
 
 class AuthController extends BaseApiController
 {
     // الووو
-    // i am here 
+    // i am here
     /**
      * Display a listing of the resource.
      */
@@ -51,37 +53,37 @@ class AuthController extends BaseApiController
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
                 'password' => 'required' // we must make valdation ya 3abdooooo
-                
-                
+
+
               ]);
-              $data['role'] = 'user' ; 
+              $data['role'] = 'user' ;
               $data['password'] = Hash::make($data['password']);
 
 
             $user = $this->userRepository->create($data);
-            
+
 
             $data = AuthResourse::transformer($user);
-            
+
             return response()->json(['user_id' => $user->id], 201);
     }
 
     public function adminRegister(Request $request)
     {
-   
+
             $data = $request->validate([
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
-                'password' => 'required' 
-                  
+                'password' => 'required'
+
               ]);
-              $data['role'] = 'admin' ; 
+              $data['role'] = 'admin' ;
               $data['password'] = Hash::make($data['password']);
-    
+
             $user = $this->userRepository->create($data);
 
             $data = AuthResourse::transformer($user);
-            
+
             return response()->json(['user_id' => $user->id], 201);
     }
 
@@ -90,15 +92,15 @@ class AuthController extends BaseApiController
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required', // we must make valdation ya 3abdooooo
-            'social_link' => 'required|url:http,https'           
+            'social_link' => 'required|url:http,https'
           ]);
-          $data['role'] = 'teacher' ; 
+          $data['role'] = 'teacher' ;
           $data['password'] = Hash::make($data['password']);
 
         $user = $this->userRepository->create($data);
 
         $data = AuthResourse::transformer($user);
-        
+
         return response()->json(['user_id' => $user->id], 201);
     }
 
@@ -115,36 +117,56 @@ public function login(Request $request)
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
 }
-    
+
 
     // public function passwordupdate(Request $request, $id)
     // {
     //     $data = Validator::make($request->all(), [
     //         'password' => 'required', // why we need title for user ?
-    //         'confirm_password' => 'required', 
+    //         'confirm_password' => 'required',
 
     //         ])->safe()->all();
     // $user = $this->userRepository->find($id);
 
-    
+
     // $data =  $this->userRepository->update($data,$user);
-  
- 
-    
+
+
+
     // return $this->success($this->formatMany(
     //     $this->userRepository->all(),
     // 'App\Http\Resources\AuthResourse'),
     // 'Updated Succesfully',201);
 
-    // }    
-    
-    // de 3ysen n3mlaha bel email zy el 2nta 3mlto 
+    // }
+
+    // de 3ysen n3mlaha bel email zy el 2nta 3mlto
+
+
+    // reset password ya gamed
+
+
+
+    public function forgetPassword(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $response = $this->broker()->sendResetLink(
+            $request->only('email')
+        );
+
+        return $response == Password::RESET_LINK_SENT
+            ? response()->json(['message' => 'Reset password link sent to your email'], 200)
+            : response()->json(['message' => 'Unable to send reset password link'], 400);
+    }
+
+
 
     public function emailupdate(Request $request, $id)
     {
         $data = Validator::make($request->all(), [
             'email' => 'required|email', // why we need title for user ?
-            'confirm_email' => 'required|email|same:email', 
+            'confirm_email' => 'required|email|same:email',
             'password' => 'required',
             'id' => 'required'
             ])->validate();
@@ -152,13 +174,13 @@ public function login(Request $request)
             $user = $this->userRepository->find($id);
             $data['id'] = $id;
             $credentials = $request->only('id','password');
-            
+
             if(Auth::attempt($credentials)){
                 $request->except(['confirm_email','password','id']);
                 $this->userRepository->update($data,$user);
-  
- 
-    
+
+
+
         return $this->success($this->formatMany(
         $this->userRepository->all(),
         'App\Http\Resources\AuthResourse'),
@@ -171,16 +193,16 @@ public function login(Request $request)
     // public function getcousebyteachername(Request $request)
     // {
     //     $categoryName = $request->input('title');
-    
+
     //     $category = Course::query();
-    
+
     //     if ($categoryName) {
     //         $category->join('categories', 'categories.id', '=', 'courses.user_id')
     //         ->where('categories.title', $categoryName);
     //     }
-    
+
     //     $filteredcategory = $category->get();
-    
+
     //     return response()->json(['category' => $filteredcategory]);
     // }
 

@@ -30,23 +30,24 @@ class UserRepositoryEloquent extends EloquentBaseRepository implements UserRepos
             $path =  $data['image']->store('public/audios'); // here i stored in the public in storge
             $path = str_replace('public','storage',$path);
             $data['image'] = $path;
-    
+
             }
             return $this->create($data);
     }
-    
+
     public function updateimage($data,  $user) {
-        
+
         if($data['image']){
             // $file = $data['file_path'];
-              $path = $data['image']->store('public/audios'); 
+              $path = $data['image']->store('public/audios');
               $path = str_replace('public','storage',$path);
               $data['image'] = $path;
-              
+
          }
-     return $this->update($user,$data); 
-  
+     return $this->update($user,$data);
+
 
 }
+
 
 }
