@@ -18,7 +18,7 @@ return new class extends Migration
             $table->boolean('is_blocked')->default(false);
             $table->string('email')->unique();
             $table->string('social_link')->nullable();
-            $table->string('image');
+            $table->string('image')->nullable();
             // $table->foreignId('user_id');
             $table->enum('role',['user','admin','teacher'])->default('user');
             $table->timestamp('email_verified_at')->nullable();

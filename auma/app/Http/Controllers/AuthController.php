@@ -59,10 +59,11 @@ class AuthController extends BaseApiController
 
 
             $user = $this->userRepository->create($data);
+            
 
             $data = AuthResourse::transformer($user);
             
-            return $this->success($data,"Created successfully",201);
+            return response()->json(['user_id' => $user->id], 201);
     }
 
     public function adminRegister(Request $request)
@@ -81,7 +82,7 @@ class AuthController extends BaseApiController
 
             $data = AuthResourse::transformer($user);
             
-            return $this->success($data,"Created successfully",201);
+            return response()->json(['user_id' => $user->id], 201);
     }
 
     public function teacherRegister(Request $request){
@@ -98,7 +99,7 @@ class AuthController extends BaseApiController
 
         $data = AuthResourse::transformer($user);
         
-        return $this->success($data,"Created successfully",201);
+        return response()->json(['user_id' => $user->id], 201);
     }
 
 
@@ -108,7 +109,8 @@ public function login(Request $request)
     $credentials = $request->only('email', 'password');
 
     if (Auth::attempt($credentials)) {
-        return response()->json(['massege'=> 'you are signed in'],200);
+        $user = Auth::user();
+        return response()->json(['user_id' => $user->id], 201);
     } else {
         return response()->json(['message' => 'Invalid credentials'], 401);
     }

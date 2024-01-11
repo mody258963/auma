@@ -68,7 +68,7 @@ class AudioController extends BaseApiController
 
         $data = AudioResourse::transformer($audio);
         
-        return $this->success($data,"Created successfully",201);
+        return response()->json($data);
 
         
      }
