@@ -3,10 +3,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AudioController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AudioController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +70,12 @@ Route::post('/update/course/{id}', [CourseController::class, 'updatecourse']);
 
 // rset passwerd ya 3m
 
-// Route::post('/forget-password', [AuthController::class, 'forgetPassword']);
+// Route::post('/forget-password', [ForgotPasswordController::class, 'forgetPassword']);
 
-Route::post('forgot-password', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+
+Route::post('password/forget-password', [ForgotPasswordController::class, 'forgetpassword']);
+
+Route::post('password/reset', [ResetPasswordController::class, 'passwordReset']);
+
+
+

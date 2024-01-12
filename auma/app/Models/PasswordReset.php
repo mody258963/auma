@@ -16,5 +16,5 @@ class PasswordReset extends Model
         'email',
         'token',
         'created_at',
-    ];
+    ]; 
 }
