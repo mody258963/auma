@@ -105,9 +105,22 @@ class AuthController extends BaseApiController
     }
 
 
+// public function login(Request $request)
+// {
+
+//     $credentials = $request->only('email', 'password');
+
+//     if (Auth::attempt($credentials)) {
+//         $user = Auth::user();
+//         return response()->json(['user_id' => $user->id], 201);
+//     } else {
+//         return response()->json(['message' => 'Invalid credentials'], 401);
+//     }
+// }
+
+
 public function login(Request $request)
 {
-
     $credentials = $request->only('email', 'password');
 
     if (Auth::attempt($credentials)) {
