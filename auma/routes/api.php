@@ -73,9 +73,10 @@ Route::post('/update/course/{id}', [CourseController::class, 'updatecourse']);
 // Route::post('/forget-password', [ForgotPasswordController::class, 'forgetPassword']);
 
 
-Route::post('/password/forget-password', [ForgotPasswordController::class, 'forgetpassword']);
+// Route::post('/password/forget-password', [ForgotPasswordController::class, 'forgetPassword']);
 
-Route::post('/password/reset', [ResetPasswordController::class, 'passwordReset']);
+// Route::post('/password/reset', [ResetPasswordController::class, 'passwordReset']);
 
 
 
+Route::post('/password/forget-password', [AuthController::class, 'forgetPassword']);
