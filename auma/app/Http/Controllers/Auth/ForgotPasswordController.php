@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 use App\Http\Requests\Auth\ForgetPasswordRequest;
 use App\Notifications\ResetPasswordVerificationNotification;
+use App\Models\PasswordReset;
 
 use App\Models\User;
 
@@ -19,6 +20,6 @@ class ForgotPasswordController extends Controller
             return response()->json($success,200);
 
 
-            
+
       }
 }

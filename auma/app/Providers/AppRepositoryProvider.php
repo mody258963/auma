@@ -15,7 +15,7 @@ use App\Repositories\User\Elqouent\UserRepositoryEloquent;
 use App\Repositories\Category\Elqouent\CategoryRepositoryEloquent;
 use App\Repositories\Course\Elqouent\CourseRepositoryEloquent;
 use Illuminate\Support\ServiceProvider;
-
+  
 class AppRepositoryProvider extends ServiceProvider
 {
     /**

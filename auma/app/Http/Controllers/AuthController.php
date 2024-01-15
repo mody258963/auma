@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use to;
 use App\Models\User;
 use App\Models\Course;
+use PharIo\Manifest\Url;
+// use App\Models\PasswordReset;
+// use App\Models\PasswordReset;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\PasswordReset;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use App\Http\Resources\AuthResourse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Auth\UserProvider;
 use App\Http\Controllers\API\BaseApiController;
-
+use App\Models\PasswordReset;
 
 class AuthController extends BaseApiController
 {
@@ -119,6 +124,19 @@ public function login(Request $request)
 }
 
 
+// public function login(Request $request)
+// {
+//     $credentials = $request->only('email', 'password');
+
+//     if (Auth::attempt($credentials)) {
+//         $user = Auth::user();
+//         return response()->json(['user_id' => $user->id], 201);
+//     } else {
+//         return response()->json(['message' => 'Invalid credentials'], 401);
+//     }
+// }
+
+
     // public function passwordupdate(Request $request, $id)
     // {
     //     $data = Validator::make($request->all(), [
@@ -145,20 +163,66 @@ public function login(Request $request)
 
     // reset password ya gamed
 
-
-
     public function forgetPassword(Request $request)
     {
-        $request->validate(['email' => 'required|email']);
+        try {
+             
+           $user = User::where('email',$request->email)->get();
 
-        $response = $this->broker()->sendResetLink(
-            $request->only('email')
-        );
 
-        return $response == Password::RESET_LINK_SENT
-            ? response()->json(['message' => 'Reset password link sent to your email'], 200)
-            : response()->json(['message' => 'Unable to send reset password link'], 400);
+             if (count($user) > 0 ) {
+
+              $token = Str::random(40);
+
+        //    $domain =  URL('/');
+        $domain = url('/');
+           $url = $domain. '/reset-password?token='.$token;
+           
+                $data['url'] = $url;
+                $data['email'] = $request->email;
+                $data['title'] = "Password Reset";
+                $data['body'] = "Please Click on below link to reset your password ya 3amm";
+                Mail::send('forgetPasswordMail', ['data'=>$data], function($message) use ($data){
+                    $message->to($data['email'])->subject($data['title']);
+                });
+                $datetime = Carbon::now()->format('Y-m-d H:i:s');
+
+                PasswordReset::updateOrcreate(
+                    ['email' =>$request->email ],
+                    [
+                       'email' => $request->email,
+                       'token' => $token,
+                       'created_at' =>$datetime
+                    ]
+                );
+                return response()->json(['success'=>true, 'msg'=>'Please check your email to reset yiur password ya 3amm']);
+             
+            
+            } else {
+                 return response()->json(['success'=>false, 'msg'=>'User not found ya 3amm']);
+             }
+             
+
+        } catch (\Exception $e) {
+            return response()->json(['success'=>false, 'msg'=>$e->getMessage()]);
+        }
+
     }
+
+
+
+    // public function forgetPassword(Request $request)
+    // {
+    //     $request->validate(['email' => 'required|email']);
+
+    //     $response = $this->broker()->sendResetLink(
+    //         $request->only('email')
+    //     );
+
+    //     return $response == Password::RESET_LINK_SENT
+    //         ? response()->json(['message' => 'Reset password link sent to your email'], 200)
+    //         : response()->json(['message' => 'Unable to send reset password link'], 400);
+    // }
 
 
 
