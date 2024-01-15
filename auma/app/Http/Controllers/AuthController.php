@@ -241,8 +241,10 @@ public function login(Request $request)
              'password' => 'required|string|min:8|confirmed'
           ]);
           $user =User::find($requset->id);
-          $user->password = $requset->password;
+          $user->password =  Hash::make($requset->password);
           $user->save();
+         PasswordReset::where('email' ,$user->email)->delete();
+
 
            return "<h1>Your Password Reset Successfully Y 3ammmmmmm </h1>";
 
