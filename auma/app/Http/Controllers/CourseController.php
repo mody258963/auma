@@ -32,20 +32,14 @@ class CourseController extends BaseApiController
     }
 
 
-    public function getCoursebyuserid(User $user)
-    {
 
-        $courses = $user->course;
-        
-        return response()->json(['cousre' => $courses]);
-    }
 
-    public function addcourse(Request $request) {
+    public function addcourse(Request $request,$category) {
         $data = Validator::make($request->all(), [
             'title' => 'required', 
             'description' => 'required'
             ])->validate();
-
+            $data['category_id'] = 1 ; 
             $data = $this->courseRepository->create($data);
 
             return $this->success($data,'Cousre is added',201);
@@ -55,7 +49,7 @@ class CourseController extends BaseApiController
     public function updatecourse(Request $request , $id) {
         $data = Validator::make($request->all(), [
             'title' => 'required',
-            'description' => 'required'
+            'description' => 'required',
             ])->validate();
             $Cousre = $this->courseRepository->find($id);
 
@@ -64,5 +58,13 @@ class CourseController extends BaseApiController
 
             return $this->success($data,'Cousre is added',201);
 
+    }
+
+    public function test(Request $request){
+        $user = User::find(1);
+        return $user->courses;
+
+    }
+    public function show(Course $course){
     }
 }

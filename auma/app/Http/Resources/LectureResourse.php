@@ -20,6 +20,7 @@ class LectureResourse extends JsonResource
     public static function transformer(Lecture $lecture){
 
         return [
+            'id' => $lecture->id,
             'title' => $lecture->title ,
             'description' => $lecture->description,
         ];

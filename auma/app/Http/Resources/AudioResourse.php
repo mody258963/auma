@@ -22,7 +22,6 @@ class AudioResourse extends JsonResource
         return [
             'id' => $audio->id,
             'title' => $audio->title ,
-            'duration' => $audio->duration,
             'audio' => env('APP_URL') . '/' . $audio->file_path,
         ];
     }

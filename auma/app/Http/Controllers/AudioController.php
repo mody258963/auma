@@ -58,10 +58,7 @@ class AudioController extends BaseApiController
     
         $data = $request->validate([
             'title' => 'required',
-            'duration' => 'required',
             'file_path' => 'required',
-            'lecture_id' => 'required',
-            
         ]);
 
         $audio = $this->audioRepository->uplodefile($data);

@@ -32,10 +32,10 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 // });
 
 Route::get('/courses', [CourseController::class, 'index']);
-Route::post('/create', [CourseController::class, 'store']);
-Route::get('/courses/{course}', [CourseController::class, 'show']);
-Route::put('/courses/{course}', [CourseController::class, 'update']);
-Route::delete('/courses/{course}', [CourseController::class, 'destroy']);
+Route::post('/create/{userId}', [CourseController::class, 'addcourse']);
+Route::get('/courses/{userId}', [CourseController::class, 'show']);
+Route::put('//courses/{userId}', [CourseController::class, 'update']);
+Route::delete('/courses/{userId}', [CourseController::class, 'destroy']);
 
 
 // audios ya s7by shyfny
@@ -65,7 +65,8 @@ Route::post('/update/category/{id}', [CategoryController::class, 'updatecategory
 
 Route::get('/get/course', [CourseController::class, 'index']);
 Route::get('/get/{user}/courses', [CourseController::class, 'getCoursebyuserid']);
-Route::post('/add/course', [CourseController::class, 'addcourse']);
+Route::post('/add/course/{category}', [CourseController::class, 'addcourse']);
+Route::get('/get/course/user', [CourseController::class, 'test']);
 Route::post('/update/course/{id}', [CourseController::class, 'updatecourse']);
 
 // rset passwerd ya 3m

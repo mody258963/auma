@@ -13,16 +13,20 @@ class Course extends Model
     protected $fillable = [
         'title',
         'description',
-        'user_id',
         'category_id'
 
     ];
-    public function user()
+    public function users()
 {
-  return $this->belongsTo(User::class);
+  return $this->belongsToMany(User::class,'user_course')->withTimestamps();
+}
+
+public function teacher()
+{
+  return $this->belongsTo(Teacher::class)->withTimestamps();
 }
 public function category(){
-  return $this -> belongsTo(Category::class,);
+  return $this -> belongsTo(Category::class);
   }
 
 public function Favorites()
