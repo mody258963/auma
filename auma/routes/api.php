@@ -58,7 +58,7 @@ Route::post('/user/delete/{id}', [AuthController::class, 'destroy']);
 
 
 Route::get('/get/category', [CategoryController::class, 'index']);
-Route::get('/get/category/name', [CategoryController::class, 'getcategorybyname']);
+Route::get('/get/category/{category}', [CategoryController::class, 'getCoursesByid']);
 Route::post('/add/category', [CategoryController::class, 'addcategory']);
 Route::post('/update/category/{id}', [CategoryController::class, 'updatecategory']);
 

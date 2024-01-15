@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\CategoryResourse;
 use App\Http\Controllers\API\BaseApiController;
+use App\Models\Category;
 use App\Repositories\Category\CategoryRepository;
 
 
@@ -72,4 +73,14 @@ class CategoryController extends BaseApiController
             return $this->success($data,'Category is added',201);
 
     }
+
+    //------------------------------test--------------------------------
+
+    public function getCoursesByid($category){
+
+        $course = $this->categoryRepository->find($category);
+        return $course->course;
+    }
+
+
 }

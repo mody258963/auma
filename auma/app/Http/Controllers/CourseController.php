@@ -39,7 +39,7 @@ class CourseController extends BaseApiController
             'title' => 'required', 
             'description' => 'required'
             ])->validate();
-            $data['category_id'] = 1 ; 
+            $data['category_id'] = $category ; 
             $data = $this->courseRepository->create($data);
 
             return $this->success($data,'Cousre is added',201);
@@ -59,7 +59,7 @@ class CourseController extends BaseApiController
             return $this->success($data,'Cousre is added',201);
 
     }
-
+//======================test===================
     public function test(Request $request){
         $user = User::find(1);
         return $user->courses;

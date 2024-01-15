@@ -17,6 +17,7 @@ abstract class EloquentBaseRepository implements BaseRepository{
     public function create($data){
         return $this->model->create($data);
     }
+    
 
     public function update($model , $data){
         return $model->update($data);
