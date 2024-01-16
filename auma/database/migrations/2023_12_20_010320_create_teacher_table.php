@@ -17,8 +17,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('link');
-            $table->boolean('is_accepted')->default(false);
-            $table->boolean('is_blocked')->default(false);
+            $table->tinyInteger('status')->default(0);// 0 = pandding / 1 = accepted / 2 = blocked
             $table->string('image')->nullable();
             $table->timestamps();
         });

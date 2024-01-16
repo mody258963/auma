@@ -7,8 +7,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AudioController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LectureController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Models\Lecture;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,11 +65,19 @@ Route::post('/add/category', [CategoryController::class, 'addcategory']);
 Route::post('/update/category/{id}', [CategoryController::class, 'updatecategory']);
 
 
-Route::get('/get/course', [CourseController::class, 'index']);
-Route::get('/get/{user}/courses', [CourseController::class, 'getCoursebyuserid']);
-Route::post('/add/course/{category}', [CourseController::class, 'addcourse']);
-Route::get('/get/course/user', [CourseController::class, 'test']);
-Route::post('/update/course/{id}', [CourseController::class, 'updatecourse']);
+Route::get('/get-all/course', [CourseController::class, 'index']);
+Route::get('/get-course/teacher/{id}', [CourseController::class, 'getcoursebyteacherid']);
+Route::get('/get-course/user/{id}', [CourseController::class, 'getcourseEnrolledbyuser']);
+Route::get('/get-user/course/{id}', [CourseController::class, 'getusersEnrolledbycourses']);
+Route::get('/get-courses/category/{id}', [CourseController::class, 'getcoursebycategoryid']); // enrollingInaCoursebyuser
+Route::post('/add-course/{category}', [CourseController::class, 'addcourse']);
+Route::post('/add-course/user/{userid}/{courseid}', [CourseController::class, 'enrollingInaCoursebyuser']); 
+Route::post('/update-course/{id}', [CourseController::class, 'updatecourse']);
+
+
+Route::get('/get-all/lecture', [LectureController::class, 'index']);
+Route::post('/add-lecture/{courseid}', [LectureController::class, 'addlecture']);
+Route::post('/update-lecture/{id}', [LectureController::class, 'update']);
 
 // rset passwerd ya 3m
 

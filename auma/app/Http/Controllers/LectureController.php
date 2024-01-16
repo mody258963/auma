@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\LectureResourse;
 use App\Http\Controllers\API\BaseApiController;
 use App\Repositories\Lecture\LectureRepository;
-
+use Illuminate\Support\Facades\Validator;
 class LectureController extends BaseApiController
 {
 
@@ -28,35 +28,37 @@ class LectureController extends BaseApiController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function addlecture(Request $request,$courseid)
     {
-        $lecture = Lecture::create($request->all());
-        return response()->json($lecture, 201);
+        $data = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            ])->validate();
+            $data['course_id'] = $courseid; 
+
+
+            $data = $this->lectureRepository->create($data);
+
+            return $this->success($data,'Cousre is added',201);
 
     }
 
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Lecture $lecture)
+
+    public function update(Request $request,$id)
     {
-        // return response()->json($lecture);
-        return LectureResourse::make($lecture);
+        $data = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            ])->validate();
+            $lecture = $this->lectureRepository->find($id);
+
+            $data = $this->lectureRepository->update($lecture,$data);
+
+            return $this->success($data,'Cousre is added',201);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Lecture $lecture)
-    {
-        $lecture->update($request->all());
-        return response()->json($lecture);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+ 
     public function destroy(Lecture $lecture)
     {
         $lecture->delete();
