@@ -50,9 +50,7 @@ Route::post('/audios/store', [AudioController::class, 'store']);
 Route::post('/audios-update/{id}', [AudioController::class, 'update']);
 Route::delete('/audios-delete/{id}', [AudioController::class, 'destroy']);
 
-//seach
 
-Route::get('/search/audio/{title}',[AudioController::class, 'searchaudio']);
 
   //Auth
 Route::get('/all-user', [AuthController::class, 'index']);
@@ -64,6 +62,7 @@ Route::post('/user/login', [AuthController::class, 'login']);
 Route::post('/password/forget-password', [AuthController::class, 'forgetPassword']);
 Route::delete('/user-delete/{id}', [AuthController::class, 'destroy']);
 
+Route::get('/search/teacher/{name}',[AuthController::class, 'searchteacher']);
 //category
 Route::get('/get/category', [CategoryController::class, 'index']);
 Route::get('/get/category/{category}', [CategoryController::class, 'getCoursesByid']);
@@ -83,7 +82,7 @@ Route::post('/add-course/user/{userid}/{courseid}', [CourseController::class, 'e
 Route::post('/update-course/{id}', [CourseController::class, 'updatecourse']);
 Route::delete('/course-delete/{id}', [CourseController::class, 'destroy']);
 
-      //seach
+      //search
 Route::get('/search/course/{title}',[CourseController::class, 'searchcourse']);
  //lecture
 Route::get('/get-all/lecture', [LectureController::class, 'index']);
@@ -92,7 +91,6 @@ Route::delete('/lecture-delete/{id}', [LectureController::class, 'destroy']);
 Route::post('/add-lecture/{courseid}', [LectureController::class, 'addlecture']);
 Route::post('/update-lecture/{id}', [LectureController::class, 'update']);
    //seach
-Route::get('/search/lecture/{name}',[LectureController::class, 'searchlecture']);
 
 // rset passwerd ya 3m
 

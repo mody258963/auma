@@ -121,10 +121,5 @@ class AudioController extends BaseApiController
 
 
 
-    function searchaudio($title)
-    {
-        $audio = Audio::where('title',$title)->get();
-        return response()->json($audio);
-
-    }
+   
 }

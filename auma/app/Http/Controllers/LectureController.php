@@ -77,14 +77,7 @@ class LectureController extends BaseApiController
     }
 
 
-    //search
-
-    function searchlecture($name)
-    {
-        $lecture = Lecture::where('name',$name)->get();
-        return response()->json($lecture);
-
-    }
+   
 
 
 }

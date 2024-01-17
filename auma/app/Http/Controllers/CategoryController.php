@@ -93,7 +93,7 @@ class CategoryController extends BaseApiController
 
     function searchcategory($title)
     {
-        $category = Category::where('title',$title)->get();
+        $category = Category::where('title',"like","%".$title."%")->get();
         return response()->json( $category);
 
     }

@@ -109,7 +109,7 @@ class CourseController extends BaseApiController
 
     function searchcourse($title)
     {
-        $course = course::where('title',$title)->get();
+        $course = course::where('title',"like","%".$title."%")->get();
         return response()->json( $course);
 
     }

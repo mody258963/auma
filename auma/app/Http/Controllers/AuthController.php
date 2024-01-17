@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use to;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Teacher;
+// use App\Models\PasswordReset;
+// use App\Models\PasswordReset;
 use PharIo\Manifest\Url;
-// use App\Models\PasswordReset;
-// use App\Models\PasswordReset;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\PasswordReset;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use App\Http\Resources\AuthResourse;
@@ -21,7 +23,6 @@ use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Auth\UserProvider;
 use App\Http\Controllers\API\BaseApiController;
-use App\Models\PasswordReset;
 
 class AuthController extends BaseApiController
 {
@@ -107,6 +108,15 @@ class AuthController extends BaseApiController
         $data = AuthResourse::transformer($user);
 
         return response()->json(['user_id' => $user->id], 201);
+    }
+
+    //search  teacher
+
+    function searchteacher($name)
+    {
+        $teacher = Teacher::where('name',"like","%".$name."%")->get();
+        return response()->json( $teacher);
+
     }
 
 
