@@ -45,6 +45,7 @@ Route::delete('/courses/{userId}', [CourseController::class, 'destroy']);
 
 Route::get('/audios', [AudioController::class, 'index']);
 Route::get('/audios-show/{id}', [AudioController::class, 'show']);
+Route::get('/get-audios/lecture/{lectureid}', [AudioController::class, 'getaudiowithcourse']);
 Route::post('/audios/store', [AudioController::class, 'store']);
 Route::post('/audios-update/{id}', [AudioController::class, 'update']);
 Route::delete('/audios-delete/{id}', [AudioController::class, 'destroy']);
@@ -56,14 +57,15 @@ Route::post('/teacher/register', [AuthController::class, 'teacherRegister']);
 Route::post('/admin/register', [AuthController::class, 'adminRegister']);
 Route::post('/email/change/{id}', [AuthController::class, 'emailupdate']);
 Route::post('/user/login', [AuthController::class, 'login']);
-Route::post('/user/delete/{id}', [AuthController::class, 'destroy']);
+Route::post('/password/forget-password', [AuthController::class, 'forgetPassword']);
+Route::delete('/user-delete/{id}', [AuthController::class, 'destroy']);
 
 
 Route::get('/get/category', [CategoryController::class, 'index']);
 Route::get('/get/category/{category}', [CategoryController::class, 'getCoursesByid']);
 Route::post('/add/category', [CategoryController::class, 'addcategory']);
 Route::post('/update/category/{id}', [CategoryController::class, 'updatecategory']);
-
+Route::delete('/category-delete/{id}', [CategoryController::class, 'destroy']);
 
 Route::get('/get-all/course', [CourseController::class, 'index']);
 Route::get('/get-course/teacher/{id}', [CourseController::class, 'getcoursebyteacherid']);
@@ -73,9 +75,11 @@ Route::get('/get-courses/category/{id}', [CourseController::class, 'getcoursebyc
 Route::post('/add-course/{category}', [CourseController::class, 'addcourse']);
 Route::post('/add-course/user/{userid}/{courseid}', [CourseController::class, 'enrollingInaCoursebyuser']); 
 Route::post('/update-course/{id}', [CourseController::class, 'updatecourse']);
-
+Route::delete('/course-delete/{id}', [CourseController::class, 'destroy']);
 
 Route::get('/get-all/lecture', [LectureController::class, 'index']);
+Route::get('/get-all/lecture/{courseid}', [LectureController::class, 'getlecturebycourseid']);
+Route::delete('/lecture-delete/{id}', [LectureController::class, 'destroy']);
 Route::post('/add-lecture/{courseid}', [LectureController::class, 'addlecture']);
 Route::post('/update-lecture/{id}', [LectureController::class, 'update']);
 
@@ -90,4 +94,3 @@ Route::post('/update-lecture/{id}', [LectureController::class, 'update']);
 
 
 
-Route::post('/password/forget-password', [AuthController::class, 'forgetPassword']);

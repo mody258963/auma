@@ -72,29 +72,39 @@ class CourseController extends BaseApiController
 
     public function getcoursebycategoryid($id){
         $category = Category::find($id);
-        return $category->course;
+         $category->course;
+         return response()->json($category);
 
     }
 
-    public function enrollingInaCoursebyuser($userid,$courseid){
-        $user = User::find($userid);
+    public function enrollingInaCoursebycourse($userid,$courseid){
+        $course = User::find($userid);
         $course = Course::find($courseid);
 
-        $user->courses()->attach($course->id);
+        $course->courses()->attach($course->id);
 
-        return response()->json(['message' => 'Role assigned to user successfully']);
-
-    }
-
-    public function getcourseEnrolledbyuser($id){
-        $user = User::find($id);
-       return $user->courses;
+        return response()->json(['message' => 'Role assigned to course successfully']);
 
     }
-    public function getusersEnrolledbycourses($id){
+
+    public function getcourseEnrolledbycourse($id){
+        $course = course::find($id);
+       return $course->courses;
+
+    }
+    public function getcoursesEnrolledbycourses($id){
         $course = $this->courseRepository->find($id);
-       return $course->users;
+       return $course->courses;
 
+    }
+
+    public function destroy($id){
+        $course = $this->courseRepository->find($id);
+        $this->courseRepository->delete($course);
+        return $this->success($this->formatMany(
+            $this->courseRepository->all(),
+        'App\Http\Resources\courseResourse'),
+        'Updated Succesfully',201);
     }
 
 }

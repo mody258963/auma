@@ -82,5 +82,13 @@ class CategoryController extends BaseApiController
         return $course->course;
     }
 
+    public function destroy($id){
+        $category = $this->categoryRepository->find($id);
+        $this->categoryRepository->delete($category);
+        return $this->success($this->formatMany(
+            $this->categoryRepository->all(),
+        'App\Http\Resources\courseResourse'),
+        'Updated Succesfully',201);
+    }
 
 }

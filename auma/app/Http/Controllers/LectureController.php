@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lecture;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Http\Resources\LectureResourse;
 use App\Http\Controllers\API\BaseApiController;
@@ -43,6 +44,12 @@ class LectureController extends BaseApiController
 
     }
 
+    public function getlecturebycourseid($courseid) {
+
+        $lecture = Course::find($courseid);
+        $lecture->course;
+        return response()->json($lecture);
+    }
 
 
     public function update(Request $request,$id)
@@ -59,8 +66,12 @@ class LectureController extends BaseApiController
     }
 
  
-    public function destroy(Lecture $lecture)
+    public function destroy($id)
     {
-        $lecture->delete();
-        return response()->json(null, 204);
+        $lecture = $this->lectureRepository->find($id);
+        $this->lectureRepository->delete($lecture);
+        return $this->success($this->formatMany(
+            $this->lectureRepository->all(),
+        'App\Http\Resources\lectureResourse'),
+        'Updated Succesfully',201);
     }}

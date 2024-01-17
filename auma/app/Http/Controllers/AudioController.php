@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\BaseApiController;
 use App\Http\Requests\AudioRequest;
+use App\Models\Course;
+use App\Models\Lecture;
 use App\Repositories\Audio\AudioRepository;
 
 // look here
@@ -100,6 +102,12 @@ class AudioController extends BaseApiController
 
     }
 
+    public function getaudiowithcourse($lectureid){
+        $lecture = Lecture::find($lectureid);
+        $audio = $lecture->audio;
+        $data = $this->formatMany($audio,'App\Http\Resources\AudioResourse');
+        return response()->json($data);
+    }
 
     public function destroy($id)
     {
