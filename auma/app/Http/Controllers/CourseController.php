@@ -39,10 +39,10 @@ class CourseController extends BaseApiController
 
     public function addcoursefromteacher(Request $request,$category) {
         $data = Validator::make($request->all(), [
-            'title' => 'required', 
+            'title' => 'required',
             'description' => 'required'
             ])->validate();
-            $data['category_id'] = $category; 
+            $data['category_id'] = $category;
             $data = $this->courseRepository->create($data);
 
             return $this->success($data,'Cousre is added',201);
@@ -105,6 +105,13 @@ class CourseController extends BaseApiController
             $this->courseRepository->all(),
         'App\Http\Resources\courseResourse'),
         'Updated Succesfully',201);
+    }
+
+    function searchcourse($title)
+    {
+        $course = course::where('title',$title)->get();
+        return response()->json( $course);
+
     }
 
 }

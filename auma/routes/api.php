@@ -50,7 +50,11 @@ Route::post('/audios/store', [AudioController::class, 'store']);
 Route::post('/audios-update/{id}', [AudioController::class, 'update']);
 Route::delete('/audios-delete/{id}', [AudioController::class, 'destroy']);
 
+//seach
 
+Route::get('/search/audio/{title}',[AudioController::class, 'searchaudio']);
+
+  //Auth
 Route::get('/all-user', [AuthController::class, 'index']);
 Route::post('/user/register', [AuthController::class, 'userRegister']);
 Route::post('/teacher/register', [AuthController::class, 'teacherRegister']);
@@ -60,28 +64,35 @@ Route::post('/user/login', [AuthController::class, 'login']);
 Route::post('/password/forget-password', [AuthController::class, 'forgetPassword']);
 Route::delete('/user-delete/{id}', [AuthController::class, 'destroy']);
 
-
+//category
 Route::get('/get/category', [CategoryController::class, 'index']);
 Route::get('/get/category/{category}', [CategoryController::class, 'getCoursesByid']);
 Route::post('/add/category', [CategoryController::class, 'addcategory']);
 Route::post('/update/category/{id}', [CategoryController::class, 'updatecategory']);
 Route::delete('/category-delete/{id}', [CategoryController::class, 'destroy']);
-
+                  //seach
+Route::get('/search/category/{title}',[CategoryController::class, 'searchcategory']);
+   //course
 Route::get('/get-all/course', [CourseController::class, 'index']);
 Route::get('/get-course/teacher/{id}', [CourseController::class, 'getcoursebyteacherid']);
 Route::get('/get-course/user/{id}', [CourseController::class, 'getcourseEnrolledbyuser']);
 Route::get('/get-user/course/{id}', [CourseController::class, 'getusersEnrolledbycourses']);
 Route::get('/get-courses/category/{id}', [CourseController::class, 'getcoursebycategoryid']); // enrollingInaCoursebyuser
 Route::post('/add-course/{category}', [CourseController::class, 'addcourse']);
-Route::post('/add-course/user/{userid}/{courseid}', [CourseController::class, 'enrollingInaCoursebyuser']); 
+Route::post('/add-course/user/{userid}/{courseid}', [CourseController::class, 'enrollingInaCoursebyuser']);
 Route::post('/update-course/{id}', [CourseController::class, 'updatecourse']);
 Route::delete('/course-delete/{id}', [CourseController::class, 'destroy']);
 
+      //seach
+Route::get('/search/course/{title}',[CourseController::class, 'searchcourse']);
+ //lecture
 Route::get('/get-all/lecture', [LectureController::class, 'index']);
 Route::get('/get-all/lecture/{courseid}', [LectureController::class, 'getlecturebycourseid']);
 Route::delete('/lecture-delete/{id}', [LectureController::class, 'destroy']);
 Route::post('/add-lecture/{courseid}', [LectureController::class, 'addlecture']);
 Route::post('/update-lecture/{id}', [LectureController::class, 'update']);
+   //seach
+Route::get('/search/lecture/{name}',[LectureController::class, 'searchlecture']);
 
 // rset passwerd ya 3m
 
