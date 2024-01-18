@@ -51,13 +51,13 @@ class AudioController extends BaseApiController
             200
         );
 
-     
+
     }
 
-  
+
     public function store(Request $request)
     {
-    
+
         $data = $request->validate([
             'title' => 'required',
             'file_path' => 'required',
@@ -66,10 +66,10 @@ class AudioController extends BaseApiController
         $audio = $this->audioRepository->uplodefile($data);
 
         $data = AudioResourse::transformer($audio);
-        
+
         return response()->json($data);
 
-        
+
      }
 
     public function show($id)
@@ -83,18 +83,18 @@ class AudioController extends BaseApiController
     {
         $data = Validator::make($request->all(), [
                 'title' => 'required|string', // why we need title for audio ?
-                'file_path' => 'required|file', 
+                'file_path' => 'required|file',
                 'lecture_id' => 'required',
                 'duration' => 'numeric', // what is this??????  this blackbox not me
 
                 ])->safe()->all();
         $audio = $this->audioRepository->find($id);
 
-        
+
      $data =  $this->audioRepository->updatefile($data,$audio);
-      
-     
-        
+
+
+
         return $this->success($this->formatMany(
             $this->audioRepository->all(),
         'App\Http\Resources\AudioResourse'),
@@ -118,4 +118,8 @@ class AudioController extends BaseApiController
         'App\Http\Resources\AudioResourse'),
         'Updated Succesfully',201);
     }
+
+
+
+   
 }

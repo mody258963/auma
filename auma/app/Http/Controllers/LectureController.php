@@ -35,7 +35,7 @@ class LectureController extends BaseApiController
             'name' => 'required',
             'description' => 'required',
             ])->validate();
-            $data['course_id'] = $courseid; 
+            $data['course_id'] = $courseid;
 
 
             $data = $this->lectureRepository->create($data);
@@ -65,7 +65,7 @@ class LectureController extends BaseApiController
             return $this->success($data,'Cousre is added',201);
     }
 
- 
+
     public function destroy($id)
     {
         $lecture = $this->lectureRepository->find($id);
@@ -74,4 +74,10 @@ class LectureController extends BaseApiController
             $this->lectureRepository->all(),
         'App\Http\Resources\lectureResourse'),
         'Updated Succesfully',201);
-    }}
+    }
+
+
+   
+
+
+}
