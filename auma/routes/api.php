@@ -57,7 +57,7 @@ Route::post('/teacher/register', [AuthController::class, 'teacherRegister']);
 Route::post('/admin/register', [AuthController::class, 'adminRegister']);
 Route::post('/email/change/{id}', [AuthController::class, 'emailupdate']);
 Route::post('/user/login', [AuthController::class, 'login']);
-Route::post('/password/forget-password', [AuthController::class, 'forgetPassword']);
+Route::post('/password/forget-password', [AuthController::class, 'forgetPassword']); // hena 27la ya 3bdooooo
 Route::delete('/user-delete/{id}', [AuthController::class, 'destroy']);
 
 
