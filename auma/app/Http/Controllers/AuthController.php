@@ -202,6 +202,7 @@ public function login(Request $request)
 
             PasswordReset::updateOrCreate(
                 ['email' => $request->email],
+
                 [
                     'email' => $request->email,
                     'token' => $token,
@@ -255,8 +256,8 @@ public function login(Request $request)
           $user->save();
          PasswordReset::where('email' ,$user->email)->delete();
 
+                        return view('success');
 
-           return "<h1>Your Password Reset Successfully Y 3ammmmmmm </h1>";
 
       }
 

@@ -26,6 +26,8 @@ public function user()
 }
 
 
+
+
 public function teacher()
 {
   return $this->belongsTo(Teacher::class)->withTimestamps();
