@@ -46,7 +46,7 @@ Route::delete('/courses/{userId}', [CourseController::class, 'destroy']);
 Route::get('/audios', [AudioController::class, 'index']);
 Route::get('/audios-show/{id}', [AudioController::class, 'show']);
 Route::get('/get-audios/lecture/{lectureid}', [AudioController::class, 'getaudiowithcourse']);
-Route::post('/audios/store', [AudioController::class, 'store']);
+Route::post('/audios/store/{id}', [AudioController::class, 'store']);
 Route::post('/audios-update/{id}', [AudioController::class, 'update']);
 Route::delete('/audios-delete/{id}', [AudioController::class, 'destroy']);
 
@@ -74,11 +74,14 @@ Route::get('/search/category/{title}',[CategoryController::class, 'searchcategor
    //course
 Route::get('/get-all/course', [CourseController::class, 'index']);
 Route::get('/get-course/teacher/{id}', [CourseController::class, 'getcoursebyteacherid']);
-Route::get('/get-course/user/{id}', [CourseController::class, 'getcourseEnrolledbyuser']);
+Route::get('/get-course/user/{id}', [CourseController::class, 'getcoursesEnrolledbyuser']);
 Route::get('/get-user/course/{id}', [CourseController::class, 'getusersEnrolledbycourses']);
+Route::get('/get-user/favertos-course/{id}', [CourseController::class, 'getfaverotofuser']);  //getfaverotofuser
 Route::get('/get-courses/category/{id}', [CourseController::class, 'getcoursebycategoryid']); // enrollingInaCoursebyuser
-Route::post('/add-course/{category}', [CourseController::class, 'addcourse']);
+Route::post('/add-course/{category}', [CourseController::class, 'addcoursefromteacher']);
 Route::post('/add-course/user/{userid}/{courseid}', [CourseController::class, 'enrollingInaCoursebyuser']);
+Route::post('/add-course/user-faverout/{userid}/{courseid}', [CourseController::class, 'addingtoFavertos']);
+
 Route::post('/update-course/{id}', [CourseController::class, 'updatecourse']);
 Route::delete('/course-delete/{id}', [CourseController::class, 'destroy']);
 

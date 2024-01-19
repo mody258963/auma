@@ -55,7 +55,7 @@ class AudioController extends BaseApiController
     }
 
 
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
 
         $data = $request->validate([

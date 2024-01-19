@@ -20,6 +20,11 @@ class Course extends Model
 {
   return $this->belongsToMany(User::class,'user_course')->withTimestamps();
 }
+public function user()
+{
+  return $this->belongsToMany(User::class,'favorites')->withTimestamps();
+}
+
 
 public function teacher()
 {
@@ -29,10 +34,6 @@ public function category(){
   return $this -> belongsTo(Category::class);
   }
 
-public function Favorites()
-{
-  return $this->hasMany(Favorites::class);
-}
 public function audio()
 {
   return $this->hasMany(Audio::class);

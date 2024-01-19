@@ -115,7 +115,7 @@ class AuthController extends BaseApiController
     function searchteacher($name)
     {
         $teacher = Teacher::where('name',"like","%".$name."%")->get();
-        return response()->json( $teacher);
+        return response()->json($teacher);
 
     }
 

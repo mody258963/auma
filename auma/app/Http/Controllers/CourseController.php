@@ -77,24 +77,39 @@ class CourseController extends BaseApiController
 
     }
 
-    public function enrollingInaCoursebycourse($userid,$courseid){
-        $course = User::find($userid);
+    public function enrollingInaCoursebyuser($userid,$courseid){
+        $user = User::find($userid);
         $course = Course::find($courseid);
 
-        $course->courses()->attach($course->id);
+        $user->courses()->attach($course->id);
 
         return response()->json(['message' => 'Role assigned to course successfully']);
 
     }
 
-    public function getcourseEnrolledbycourse($id){
-        $course = course::find($id);
-       return $course->courses;
+    public function addingtoFavertos($userid,$courseid){
+        $user = User::find($userid);
+        $course = Course::find($courseid);
+        
+        $user->course()->attach($course->id);
+
+        return response()->json(['message' => 'Role assigned to course successfully']);
 
     }
-    public function getcoursesEnrolledbycourses($id){
+
+    public function getcoursesEnrolledbyuser($id){
+        $user = User::find($id);
+       return $user->courses;
+
+    }
+    public function getfaverotofuser($id){
+        $user = User::find($id);
+       return $user->course;
+
+    }
+    public function getusersEnrolledbycourses($id){
         $course = $this->courseRepository->find($id);
-       return $course->courses;
+       return $course->users;
 
     }
 
