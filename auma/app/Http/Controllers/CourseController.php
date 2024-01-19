@@ -90,23 +90,39 @@ class CourseController extends BaseApiController
     public function addingtoFavertos($userid,$courseid){
         $user = User::find($userid);
         $course = Course::find($courseid);
-        
+
         $user->course()->attach($course->id);
 
         return response()->json(['message' => 'Role assigned to course successfully']);
 
     }
 
+
+    public function getfaverotofuser($id){
+        $user = User::find($id);
+       return $user->course;
+    }
+
+    public function deleteFavoriteOfUser($userId, $courseId)
+{
+    $user = User::find($userId);
+
+    if (!$user) {
+        return response()->json(['error' => 'User not found'], 404);
+    }
+
+    
+    $user->course()->detach($courseId);
+
+    return response()->json(['message' => 'Course removed from favorites successfully'], 200);
+}
+
     public function getcoursesEnrolledbyuser($id){
         $user = User::find($id);
        return $user->courses;
 
     }
-    public function getfaverotofuser($id){
-        $user = User::find($id);
-       return $user->course;
 
-    }
     public function getusersEnrolledbycourses($id){
         $course = $this->courseRepository->find($id);
        return $course->users;
