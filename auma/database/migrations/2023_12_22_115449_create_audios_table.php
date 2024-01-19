@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('file_path');
             $table->foreignId('lecture_id')->constrained('lectures'); // hena 7tet course_id
-            $table->integer('duration');
             $table->timestamps();
         });
     }

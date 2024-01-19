@@ -11,6 +11,7 @@ use App\Http\Requests\AudioRequest;
 use App\Models\Course;
 use App\Models\Lecture;
 use App\Repositories\Audio\AudioRepository;
+use Illuminate\Support\Facades\Storage;
 
 // look here
 // i have many courses
@@ -60,9 +61,12 @@ class AudioController extends BaseApiController
 
         $data = $request->validate([
             'title' => 'required',
-            'file_path' => 'required',
+            'file_path' => 'required|file',
         ]);
-
+        // $file = $request->file('file_path');
+        // $path = Storage::disk('public')->put('uploads', $file);
+        // $data['file_path'] = $path;
+        $data['lecture_id'] = $id;
         $audio = $this->audioRepository->uplodefile($data);
 
         $data = AudioResourse::transformer($audio);
