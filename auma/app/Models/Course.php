@@ -21,6 +21,8 @@ class Course extends Model
   return $this->belongsToMany(User::class,'user_course')->withTimestamps();
 }
 
+
+
 public function teacher()
 {
   return $this->belongsTo(Teacher::class)->withTimestamps();

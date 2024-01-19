@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\FavoriteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -94,12 +95,6 @@ Route::post('/update-lecture/{id}', [LectureController::class, 'update']);
 
 // rset passwerd ya 3m
 
-// Route::post('/forget-password', [ForgotPasswordController::class, 'forgetPassword']);
 
-
-// Route::post('/password/forget-password', [ForgotPasswordController::class, 'forgetPassword']);
-
-// Route::post('/password/reset', [ResetPasswordController::class, 'passwordReset']);
-
-
+Route::post('/user/{user}/favorite/{course}', [FavoriteController::class, 'addFavorite']);
 
