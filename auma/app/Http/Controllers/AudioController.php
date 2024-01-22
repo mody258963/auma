@@ -63,15 +63,18 @@ class AudioController extends BaseApiController
             'title' => 'required',
             'file_path' => 'required|file',
         ]);
-        // $file = $request->file('file_path');
+        $path = $request->file('file_path')->storePublicly('public/images'); 
         // $path = Storage::disk('public')->put('uploads', $file);
         // $data['file_path'] = $path;
-        $data['lecture_id'] = $id;
-        $audio = $this->audioRepository->uplodefile($data);
+        // $data['lecture_id'] = $id;
+        // $audio = $this->audioRepository->uplodefile($data);
 
-        $data = AudioResourse::transformer($audio);
+        // $data = AudioResourse::transformer($audio);
 
-        return response()->json($data);
+        return response()->json([
+            'path' => "https://aumalaravel.s3.amazonaws.com/$path",
+            'msg' => 'success',
+        ]);
 
 
      }
@@ -125,5 +128,5 @@ class AudioController extends BaseApiController
 
 
 
-   
+
 }

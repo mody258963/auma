@@ -223,7 +223,7 @@ public function login(Request $request)
 
 
 
-}
+}       
 
       //reset password load
 
