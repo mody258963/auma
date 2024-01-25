@@ -13,5 +13,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 interface AudioRepository extends BaseRepository
 {
     public function uplodefile($request);
-    public function updatefile($data, $audio);
+    public function updatefile($data, $audio ,$path);
 }       

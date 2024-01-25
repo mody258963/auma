@@ -59,22 +59,20 @@ class AudioController extends BaseApiController
     public function store(Request $request,$id)
     {
 
-        $data = $request->validate([
-            'title' => 'required',
-            'file_path' => 'required|file',
-        ]);
-        $path = $request->file('file_path')->storePublicly('public/images'); 
+        $path = $request->file('file_path')->store('public/images'); 
         // $path = Storage::disk('public')->put('uploads', $file);
         // $data['file_path'] = $path;
-        // $data['lecture_id'] = $id;
-        // $audio = $this->audioRepository->uplodefile($data);
-
-        // $data = AudioResourse::transformer($audio);
-
-        return response()->json([
-            'path' => "https://aumalaravel.s3.amazonaws.com/$path",
-            'msg' => 'success',
+        $data = $request->validate([
+            'title' => 'required',
         ]);
+        $data['lecture_id'] = $id;
+        $data['file_path']= "https://uamh-laravel.s3.amazonaws.com/$path";
+        
+         $audio = $this->audioRepository->create($data);
+
+         $data = AudioResourse::transformer($audio);
+
+        return response()->json($data);
 
 
      }
@@ -88,20 +86,25 @@ class AudioController extends BaseApiController
 
     public function update(Request $request , $id)
     {
-        $data = Validator::make($request->all(), [
-                'title' => 'required|string', // why we need title for audio ?
-                'file_path' => 'required|file',
-                'lecture_id' => 'required',
-                'duration' => 'numeric', // what is this??????  this blackbox not me
-
-                ])->safe()->all();
         $audio = $this->audioRepository->find($id);
-
-
-     $data =  $this->audioRepository->updatefile($data,$audio);
-
-
-
+        
+        if($request['file_path']){
+            // $file = $data['file_path'];
+            $file =  Audio::find($id, ['file_path']);
+            $var = $file['file_path'];
+            $str = str_replace('https://uamh-laravel.s3.amazonaws.com/','',$var);
+            Storage::disk('s3')->delete($str);
+            
+            $path = $request->file('file_path')->store('public/images'); 
+            $data['file_path']= "https://uamh-laravel.s3.amazonaws.com/$path";
+        }
+        $data = Validator::make($request->all(), [
+            'title' => 'required|string', 
+            'file_path' => 'required|file',
+            ])->safe()->all();
+        
+            $data =  $this->audioRepository->update($audio, $data);
+            
         return $this->success($this->formatMany(
             $this->audioRepository->all(),
         'App\Http\Resources\AudioResourse'),
@@ -118,8 +121,9 @@ class AudioController extends BaseApiController
 
     public function destroy($id)
     {
+
         $audio = $this->audioRepository->find($id);
-        $this->audioRepository->delete($audio);
+
         return $this->success($this->formatMany(
             $this->audioRepository->all(),
         'App\Http\Resources\AudioResourse'),

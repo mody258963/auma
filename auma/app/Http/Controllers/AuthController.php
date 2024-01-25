@@ -97,7 +97,7 @@ class AuthController extends BaseApiController
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required', // we must make valdation ya 3abdooooo
+            'password' => 'required', 
             'social_link' => 'required|url:http,https'
           ]);
           $data['role'] = 'teacher' ;

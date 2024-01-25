@@ -12,7 +12,7 @@ interface BaseRepository{
     public function saveImage($file,$path);
     public function all();
     // public function findMany($ids);
-    // public function where($att);
+    // public function where($id, $data);
     // public function orWhere($att);
     // public function buildQuery();
 }

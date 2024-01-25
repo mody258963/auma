@@ -7,7 +7,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\Audio\AudioRepository;
 use App\Entities\Audio\Audio;
 use Illuminate\Support\Facades\Cache;
-
+use Illuminate\Support\Facades\Storage;
 use App\Repositories\EloquentBaseRepository;
 use App\Validators\Audio\AudioValidator;
 
@@ -40,17 +40,10 @@ class AudioRepositoryEloquent extends EloquentBaseRepository implements AudioRep
         return $this->create($data);
     }
     
-    public function updatefile($data,  $audio) {
+    public function updatefile($data, $file , $path) {
         
-       // dd($data);
-        if($data['file_path']){
-          // $file = $data['file_path'];
-            $path = $data['file_path']->store('public/audios'); 
-            $path = str_replace('public','storage',$path);
-            $data['file_path'] = $path;
-            
-       }
-   return $this->update($audio,$data); 
+      
+   return $this->update($file,$data); 
 
 }
 
