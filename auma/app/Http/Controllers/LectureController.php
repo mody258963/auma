@@ -37,7 +37,6 @@ class LectureController extends BaseApiController
             ])->validate();
             $data['course_id'] = $courseid;
 
-
             $data = $this->lectureRepository->create($data);
 
             return $this->success($data,'Cousre is added',201);
@@ -77,7 +76,7 @@ class LectureController extends BaseApiController
     }
 
 
-   
+
 
 
 }
