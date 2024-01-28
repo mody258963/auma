@@ -139,7 +139,7 @@ class AudioController extends BaseApiController
         }
 
 
-        $path = $request->file('file_path')->store('public/images');
+        $path = $request->file('file_path')->storePublicly('public/images');
         $audio->file_path = "https://uamh-laravel.s3.amazonaws.com/$path";
     }
 
@@ -150,7 +150,7 @@ class AudioController extends BaseApiController
 
 
     $audios = $this->audioRepository->all();
-    $formattedAudios = $this->formatMany($audios, 'App\Http\Resources\AudioResource');
+    $formattedAudios = $this->formatMany($audios, 'App\Http\Resources\AudioResourse');
 
     return response()->json([
         'audios' => $formattedAudios,

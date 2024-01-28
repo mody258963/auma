@@ -21,6 +21,7 @@ class CourseResourse extends JsonResource
     public static function transformer(Course $course){
 
         return [
+            'id' => (int) $course->id,
             'title' => $course->title ,
             'description' => $course->description,
         ];

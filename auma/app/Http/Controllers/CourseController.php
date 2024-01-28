@@ -66,7 +66,7 @@ class CourseController extends BaseApiController
 
     public function getcoursebyteacherid($id){
         $tacher = Teacher::find($id);
-        return $tacher->course;
+        return $this->formatMany($tacher->course, 'App\Http\Resources\CourseResourse');
 
     }
 
