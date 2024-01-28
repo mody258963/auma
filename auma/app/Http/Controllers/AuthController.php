@@ -58,8 +58,8 @@ class AuthController extends BaseApiController
             $data = $request->validate([
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
-                'password' => 'required' // we must make valdation ya 3abdooooo
-
+                'password' => 'required' ,  // we must make valdation ya 3abdooooo
+                'cpassword' => 'required|same:password'
 
               ]);
               $data['role'] = 'user' ;
@@ -80,7 +80,9 @@ class AuthController extends BaseApiController
             $data = $request->validate([
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
-                'password' => 'required'
+                'password' => 'required',
+                'cpassword' => 'required|same:password'
+
 
               ]);
               $data['role'] = 'admin' ;
@@ -98,14 +100,12 @@ class AuthController extends BaseApiController
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required', 
-            'social_link' => 'required|url:http,https'
+            'cpassword' => 'required|same:password',
+            'link' => 'required|url:http,https'
           ]);
-          $data['role'] = 'teacher' ;
           $data['password'] = Hash::make($data['password']);
 
-        $user = $this->userRepository->create($data);
-
-        $data = AuthResourse::transformer($user);
+        $user = Teacher::create($data);
 
         return response()->json(['user_id' => $user->id], 201);
     }
