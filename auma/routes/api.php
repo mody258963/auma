@@ -56,7 +56,7 @@ Route::delete('/audios-delete/{id}', [AudioController::class, 'destroy']);
 
 
 
- 
+
     Route::get('/all-user', [AuthController::class, 'index']);
     Route::post('/admin/register', [AuthController::class, 'adminRegister']);
     Route::post('/email/change/{id}', [AuthController::class, 'emailupdate']);
