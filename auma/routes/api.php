@@ -54,25 +54,37 @@ Route::delete('/audios-delete/{id}', [AudioController::class, 'destroy']);
 
 
   //Auth
-Route::get('/all-user', [AuthController::class, 'index']);
-Route::post('/user/register', [AuthController::class, 'userRegister']);
-Route::post('/teacher/register', [AuthController::class, 'teacherRegister']);
-Route::post('/admin/register', [AuthController::class, 'adminRegister']);
-Route::post('/email/change/{id}', [AuthController::class, 'emailupdate']);
-Route::post('/user/login', [AuthController::class, 'login']);
-Route::post('/password/forget-password', [AuthController::class, 'forgetPassword']); // hena 27la ya 3bdooooo
-Route::delete('/user-delete/{id}', [AuthController::class, 'destroy']);
 
-Route::get('/search/teacher/{name}',[AuthController::class, 'searchteacher']);
-//category
+
+
+  Route::middleware('auth.api')->group(function () {
+    Route::get('/all-user', [AuthController::class, 'index']);
+    Route::post('/user/register', [AuthController::class, 'userRegister']);
+    Route::post('/teacher/register', [AuthController::class, 'teacherRegister']);
+    Route::post('/admin/register', [AuthController::class, 'adminRegister']);
+    Route::post('/email/change/{id}', [AuthController::class, 'emailupdate']);
+    Route::post('/user/login', [AuthController::class, 'login']);
+    Route::post('/password/forget-password', [AuthController::class, 'forgetPassword']); // hena 27la ya 3bdooooo
+    Route::delete('/user-delete/{id}', [AuthController::class, 'destroy']);
+
+    Route::get('/search/teacher/{name}',[AuthController::class, 'searchteacher']);
+});
+
+Route::middleware('api.log')->group(function () {
+
+    //category
 Route::get('/get/category', [CategoryController::class, 'index']);
 Route::get('/get/category/{category}', [CategoryController::class, 'getCoursesByid']);
 Route::post('/add/category', [CategoryController::class, 'addcategory']);
 Route::post('/update/category/{id}', [CategoryController::class, 'updatecategory']);
 Route::delete('/category-delete/{id}', [CategoryController::class, 'destroy']);
-                  //seach
-Route::get('/search/category/{title}',[CategoryController::class, 'searchcategory']);
-   //course
+                 //seach
+ Route::get('/search/category/{title}',[CategoryController::class, 'searchcategory']);
+
+});
+
+Route::middleware('api.permissions')->group(function () {
+      //course
 Route::get('/get-all/course', [CourseController::class, 'index']);
 Route::get('/get-course/teacher/{id}', [CourseController::class, 'getcoursebyteacherid']);
 Route::get('/get-course/user/{id}', [CourseController::class, 'getcoursesEnrolledbyuser']);
@@ -83,20 +95,27 @@ Route::post('/add-course/{category}', [CourseController::class, 'addcoursefromte
 Route::post('/add-course/user/{userid}/{courseid}', [CourseController::class, 'enrollingInaCoursebyuser']);
 Route::post('/add-course/user-faverout/{userid}/{courseid}', [CourseController::class, 'addingtoFavertos']);
 Route::delete('user/{userId}/favorite/{courseId}', [CourseController::class, 'deleteFavoriteOfUser']);
-
-
 Route::post('/update-course/{id}', [CourseController::class, 'updatecourse']);
 Route::delete('/course-delete/{id}', [CourseController::class, 'destroy']);
 
       //search
 Route::get('/search/course/{title}',[CourseController::class, 'searchcourse']);
- //lecture
+});
+
+Route::middleware('api.auth')->group(function () {
+    //lecture
 Route::get('/get-all/lecture', [LectureController::class, 'index']);
 Route::get('/get-all/lecture/{courseid}', [LectureController::class, 'getlecturebycourseid']);
 Route::delete('/lecture-delete/{id}', [LectureController::class, 'destroy']);
 Route::post('/add-lecture/{courseid}', [LectureController::class, 'addlecture']);
 Route::post('/update-lecture/{id}', [LectureController::class, 'update']);
-   //seach
+
+});
+
+
+
+;
+
 
 // rset passwerd ya 3m
 
