@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->foreignId('teacher_id')->constrained('teacher');
             $table->foreignId('category_id')->constrained('categories');
+            $table->string('book');
             $table->timestamps();
         });
     }

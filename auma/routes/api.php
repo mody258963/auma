@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\FavoriteController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AudioController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\LectureController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Models\Lecture;
+use GuzzleHttp\Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +48,7 @@ Route::delete('/courses/{userId}', [CourseController::class, 'destroy']);
 
 Route::get('/audios', [AudioController::class, 'index']);
 Route::get('/audios-show/{id}', [AudioController::class, 'show']);
-Route::get('/get-audios/lecture/{lectureid}', [AudioController::class, 'getaudiowithcourse']);
+Route::get('/get-audios/lecture/{lectureid}', [AudioController::class, 'getaudiowithlecture']);
 Route::post('/audios/store/{id}', [AudioController::class, 'store']);
 Route::post('/audios-update/{id}', [AudioController::class, 'update']);
 Route::delete('/audios-delete/{id}', [AudioController::class, 'destroy']);
@@ -64,6 +66,8 @@ Route::delete('/audios-delete/{id}', [AudioController::class, 'destroy']);
     Route::post('/password/forget-password', [AuthController::class, 'forgetPassword']); // hena 27la ya 3bdooooo
     Route::delete('/user-delete/{id}', [AuthController::class, 'destroy']);
     Route::get('/search/teacher/{name}',[AuthController::class, 'searchteacher']);
+
+
 
 Route::post('/user/register', [AuthController::class, 'userRegister']);
 Route::post('/teacher/register', [AuthController::class, 'teacherRegister']);
@@ -113,8 +117,17 @@ Route::post('/update-lecture/{id}', [LectureController::class, 'update']);
 
 
 
+
 // rset passwerd ya 3m
 
 
-Route::post('/user/{user}/favorite/{course}', [FavoriteController::class, 'addFavorite']);
+// Route::post('/user/{user}/favorite/{course}', [FavoriteController::class, 'addFavorite']);
 
+Route::get('/soso/', function(){
+    $client = new Client();
+    $data = $client->get('http://127.0.0.1:5000/use_image');
+    $data_body = $data->getBody();
+
+    $api =  $data_body;
+    return $api;
+});

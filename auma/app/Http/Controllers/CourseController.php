@@ -40,7 +40,8 @@ class CourseController extends BaseApiController
     public function addcoursefromteacher(Request $request,$category,$teacher) {
         $data = Validator::make($request->all(), [
             'title' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'book' => 'required'
             ])->validate();
             $data['category_id'] = $category;
             $data['teacher_id'] = $teacher;

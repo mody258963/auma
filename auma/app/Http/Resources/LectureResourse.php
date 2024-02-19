@@ -21,7 +21,7 @@ class LectureResourse extends JsonResource
 
         return [
             'id' => $lecture->id,
-            'title' => $lecture->title ,
+            'name' => $lecture->name ,
             'description' => $lecture->description,
         ];
     }
