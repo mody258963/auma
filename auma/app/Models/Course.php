@@ -15,7 +15,8 @@ class Course extends Model
         'description',
         'category_id',
         'teacher_id',
-        'book'
+        'book',
+        'image'
 
 
     ];

@@ -91,7 +91,7 @@ Route::get('/get-course/user/{id}', [CourseController::class, 'getcoursesEnrolle
 Route::get('/get-user/course/{id}', [CourseController::class, 'getusersEnrolledbycourses']);
 Route::get('/get-user/favertos-course/{id}', [CourseController::class, 'getfaverotofuser']);  //getfaverotofuser
 Route::get('/get-courses/category/{id}', [CourseController::class, 'getcoursebycategoryid']); // enrollingInaCoursebyuser
-Route::post('/add-course/{category}', [CourseController::class, 'addcoursefromteacher']);
+Route::post('/add-course/{category}/{teacher}', [CourseController::class, 'addcoursefromteacher']);
 Route::post('/add-course/user/{userid}/{courseid}', [CourseController::class, 'enrollingInaCoursebyuser']);
 Route::post('/add-course/user-faverout/{userid}/{courseid}', [CourseController::class, 'addingtoFavertos']);
 Route::delete('user/{userId}/favorite/{courseId}', [CourseController::class, 'deleteFavoriteOfUser']);

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->string('image');
             $table->foreignId('teacher_id')->constrained('teacher');
             $table->foreignId('category_id')->constrained('categories');
             $table->string('book');

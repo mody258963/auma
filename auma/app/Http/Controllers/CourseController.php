@@ -38,14 +38,17 @@ class CourseController extends BaseApiController
 
 
     public function addcoursefromteacher(Request $request,$category,$teacher) {
+        $path = $request->file('image')->storePublicly('public/images');
         $data = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
-            'book' => 'required'
+            'book' => 'required',
             ])->validate();
+            $data['image']= "https://uamh-laravel.s3.amazonaws.com/$path";
             $data['category_id'] = $category;
             $data['teacher_id'] = $teacher;
             $data = $this->courseRepository->create($data);
+            
 
             return $this->success($data,'Cousre is added',201);
 
