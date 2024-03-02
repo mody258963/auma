@@ -56,6 +56,8 @@ class CategoryController extends BaseApiController
 
             $data = $this->categoryRepository->create($data);
 
+            
+
             return $this->success($data,'Category is added',201);
 
     }

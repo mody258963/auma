@@ -48,14 +48,16 @@ class CourseController extends BaseApiController
             ])->validate();
             $data['category_id'] = $category;
             $data['teacher_id'] = $teacher;
+            $data['image']= "https://uamh-laravel.s3.amazonaws.com/$path";
+
            // $data = $this->courseRepository->create($data);
 
            
-            $course = $this->courseRepository->uplodeimage($data);
-          
-    
+           $course = $this->courseRepository->create($data);
+           $courses = new CourseResource($course);
+        dd($course);
 
-             return $this->formatMany( $course,'App\Http\Resources\CourseResourse');
+           return $courses;
 
     }
 

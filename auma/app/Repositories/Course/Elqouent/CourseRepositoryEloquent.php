@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Course\Elqouent;
 
-require './vendor/autoload.php';
+
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\Course\CourseRepository;
@@ -27,22 +27,6 @@ class CourseRepositoryEloquent extends EloquentBaseRepository implements CourseR
      */
 
      
-     public function uplodeimage($data)
-    {
-        $manager = new ImageManager(Driver::class);
-        if($data['image']){
-            $image = $data->file('image');
-            $encoded = $image->encode(new AutoEncoder(quality: 50)); 
-       
-            $path = $encoded->storePublicly('public/images');
-            $data['image']= "https://uamh-laravel.s3.amazonaws.com/$path";
-            
-
-
-
-            }
-            return $this->create($data);
-    }
-
+    
     
 }

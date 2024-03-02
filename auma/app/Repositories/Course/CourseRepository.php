@@ -13,5 +13,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 interface CourseRepository extends BaseRepository
 {
 
-    public function uplodeimage($request);
+    
 }
