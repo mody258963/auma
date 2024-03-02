@@ -24,11 +24,12 @@ class CourseResourse extends JsonResource
             'id' => (int) $course->id,
             'title' => $course->title ,
             'description' => $course->description,
-            'teacher_id' => $course->teacher_id,
-            'category_id' => $course->category_id,
+            'teacher_id' => (int) $course->teacher_id,
+            'category_id' => (int) $course->category_id,
             'book' => $course->book,
-            'image' => $course->image
-
+            'image' => $course->image,
+            'created_at' => $course->created_at,
+            'updated_at' => $course->updated_at,
 
         ];
     }

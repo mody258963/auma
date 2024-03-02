@@ -8,6 +8,7 @@ use App\Http\Controllers\API\BaseApiController;
 use App\Models\Category;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Http\Resources\CourseResource;
 use App\Repositories\Course\CourseRepository;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,7 +31,7 @@ class CourseController extends BaseApiController
         //     200
         // );
 
-        $data = $this->formatMany($this->courseRepository->all(), 'App\Http\Resources\AuthResourse');
+        $data = $this->formatMany($this->courseRepository->all(), 'App\Http\Resources\CourseResource');
         return response()->json($data);
     }
 
@@ -38,19 +39,23 @@ class CourseController extends BaseApiController
 
 
     public function addcoursefromteacher(Request $request,$category,$teacher) {
+        
         $path = $request->file('image')->storePublicly('public/images');
         $data = Validator::make($request->all(), [
             'title' => 'required',
             'description' => 'required',
             'book' => 'required',
             ])->validate();
-            $data['image']= "https://uamh-laravel.s3.amazonaws.com/$path";
             $data['category_id'] = $category;
             $data['teacher_id'] = $teacher;
-            $data = $this->courseRepository->create($data);
-            
+           // $data = $this->courseRepository->create($data);
 
-            return $this->success($data,'Cousre is added',201);
+           
+            $course = $this->courseRepository->uplodeimage($data);
+          
+    
+
+             return $this->formatMany( $course,'App\Http\Resources\CourseResourse');
 
     }
 

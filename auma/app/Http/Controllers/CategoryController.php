@@ -21,14 +21,13 @@ class CategoryController extends BaseApiController
 
     public function index()
     {
-        return $this->success(
+        return 
             $this->formatMany(
                 $this->categoryRepository->all(),
                 'App\Http\Resources\CategoryResourse'
-            ),
-            "categories retreived succssefully",
-            200
-        );
+            );
+        
+  
 
 
     }

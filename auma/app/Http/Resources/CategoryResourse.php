@@ -21,6 +21,7 @@ class CategoryResourse extends JsonResource
     public static function transformer(Category $category){
 
         return [
+            'id' => (int) $category->id,
             'title' => $category->title ,
         ];
     }

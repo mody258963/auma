@@ -75,7 +75,7 @@ Route::post('/teacher/register', [AuthController::class, 'teacherRegister']);
 
 
 Route::get('/get/category', [CategoryController::class, 'index']);
-Route::get('/get/category/{category}', [CategoryController::class, 'getCoursesByid']);
+Route::get('/get/category/{category}', [CategoryController::class, 'getcategorybyname']);
 Route::post('/add/category', [CategoryController::class, 'addcategory']);
 Route::post('/update/category/{id}', [CategoryController::class, 'updatecategory']);
 Route::delete('/category-delete/{id}', [CategoryController::class, 'destroy']);
