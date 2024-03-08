@@ -15,14 +15,11 @@ class CategoryResourse extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
-    }
-
-    public static function transformer(Category $category){
-
         return [
-            'id' => (int) $category->id,
-            'title' => $category->title ,
+            'id' => (int) $this->id,
+            'title' => $this->title ,
         ];
     }
-}
+    }
+
+

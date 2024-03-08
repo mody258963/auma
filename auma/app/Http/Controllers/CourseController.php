@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseApiController;
+use App\Http\Resources\CourseResourse;
 use App\Models\Category;
 use App\Models\Teacher;
 use App\Models\User;
-use App\Http\Resources\CourseResource;
 use App\Repositories\Course\CourseRepository;
 use Illuminate\Support\Facades\Validator;
 
@@ -39,7 +39,7 @@ class CourseController extends BaseApiController
 
 
     public function addcoursefromteacher(Request $request,$category,$teacher) {
-        
+        $awsUrl = config('filesystems.disks.s3.url');
         $path = $request->file('image')->storePublicly('public/images');
         $data = Validator::make($request->all(), [
             'title' => 'required',
@@ -48,14 +48,12 @@ class CourseController extends BaseApiController
             ])->validate();
             $data['category_id'] = $category;
             $data['teacher_id'] = $teacher;
-            $data['image']= "https://uamh-laravel.s3.amazonaws.com/$path";
+            $data['image']= $awsUrl . $path;
 
            // $data = $this->courseRepository->create($data);
 
-           
            $course = $this->courseRepository->create($data);
-           $courses = new CourseResource($course);
-        dd($course);
+           $courses = new CourseResourse($course);
 
            return $courses;
 
@@ -77,7 +75,9 @@ class CourseController extends BaseApiController
 
     public function getcoursebyteacherid($id){
         $tacher = Teacher::find($id);
-        return $this->formatMany($tacher->course, 'App\Http\Resources\CourseResourse');
+        $courses = CourseResourse::collection($tacher->course );
+
+        return $courses;
 
     }
 

@@ -2,19 +2,16 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Audio;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
-class CourseResource extends JsonResource
+use  App\Http\Controllers\API\BaseApiController;
+class CourseResourse extends JsonResource
 {
     /**
-     * Transform the resource (course model) into an array.
+     * Transform the resource into an array.
      *
-     * This method defines how the course model is transformed and what attributes
-     * are included in the responses where this resource is used.
-     *
-     * @param Request $request
-     * @return array<string, mixed> The array representation of the course model.
+     * @return array<string, mixed>
      */
     public function toArray(Request $request): array
     {
@@ -30,4 +27,6 @@ class CourseResource extends JsonResource
             'updated_at' => $this->updated_at,
         ];
     }
+
+
 }

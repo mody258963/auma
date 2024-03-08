@@ -21,11 +21,10 @@ class CategoryController extends BaseApiController
 
     public function index()
     {
-        return 
-            $this->formatMany(
-                $this->categoryRepository->all(),
-                'App\Http\Resources\CategoryResourse'
-            );
+        $catogry = $this->categoryRepository->all();
+
+        return CategoryResourse::collection($catogry);
+          
         
   
 
