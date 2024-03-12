@@ -6,8 +6,6 @@ use to;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Teacher;
-// use App\Models\PasswordReset;
-// use App\Models\PasswordReset;
 use PharIo\Manifest\Url;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -22,7 +20,9 @@ use Illuminate\Support\Facades\Password;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\API\BaseApiController;
+
 
 class AuthController extends BaseApiController
 {
