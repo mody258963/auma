@@ -21,9 +21,6 @@ class LectureResourse extends JsonResource
             'description' => $this->description,
         ];
     }
-    public static function transformer(Lecture $lecture){
 
-        
-    }
 }
 

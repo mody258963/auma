@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
-
+use App\Http\Resources\LectureResourse;
 use App\Http\Controllers\API\BaseApiController;
+use App\Models\Lecture;
 use App\Repositories\Lecture\LectureRepository;
 use Illuminate\Support\Facades\Validator;
 class LectureController extends BaseApiController
@@ -45,8 +46,10 @@ class LectureController extends BaseApiController
     public function getlecturebycourseid($courseid) {
 
         $course = Course::find($courseid);
-        // $lecture->course;
-        return $this->formatMany( $course->lecture, 'App\Http\Resources\LectureResourse');
+        
+        $courses =  LectureResourse::collection($course->lecture);
+
+        return $courses;
     }
 
 

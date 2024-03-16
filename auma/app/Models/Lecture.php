@@ -15,8 +15,6 @@ class Lecture extends Model
         'name',
         'description',
         'course_id',
-
-     
          ];
 
 
