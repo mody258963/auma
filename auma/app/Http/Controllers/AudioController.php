@@ -41,8 +41,15 @@ class AudioController extends BaseApiController
     public function store(Request $request,$id)
     {
 
+<<<<<<< HEAD
         $path = $request->file('file_path')->storePublicly('public/image');
 
+=======
+        
+        $path = $request->file('file_path')->storePublicly('public/images');
+        // $path = Storage::disk('public')->put('uploads', $file);
+        // $data['file_path'] = $path;
+>>>>>>> 0fce94d033a1b85425edba99a89b50fd36fa8bde
         $data = $request->validate([
             'title' => 'required',
         ]);
@@ -114,7 +121,7 @@ class AudioController extends BaseApiController
 }
 
 
-    public function getaudiowithcourse($lectureid){
+    public function getaudiowithlecture($lectureid){
         $lecture = Lecture::find($lectureid);
         $audio = $lecture->audio;
         $data = $this->formatMany($audio,'App\Http\Resources\AudioResourse');

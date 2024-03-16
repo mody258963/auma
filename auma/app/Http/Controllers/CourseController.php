@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseApiController;
+use App\Http\Resources\CourseResourse;
 use App\Models\Category;
 use App\Models\Teacher;
 use App\Models\User;
@@ -29,8 +30,13 @@ class CourseController extends BaseApiController
         //     "categories retreived succssefully",
         //     200
         // );
+<<<<<<< HEAD
  */
         $data = $this->formatMany($this->courseRepository->all(), 'App\Http\Resources\AuthResourse');
+=======
+
+        $data = $this->formatMany($this->courseRepository->all(), 'App\Http\Resources\CourseResource');
+>>>>>>> 0fce94d033a1b85425edba99a89b50fd36fa8bde
         return response()->json($data);
     }
 
@@ -38,15 +44,23 @@ class CourseController extends BaseApiController
 
 
     public function addcoursefromteacher(Request $request,$category,$teacher) {
+        $awsUrl = config('filesystems.disks.s3.url');
+        $path = $request->file('image')->storePublicly('public/images');
         $data = Validator::make($request->all(), [
             'title' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'book' => 'required',
             ])->validate();
             $data['category_id'] = $category;
             $data['teacher_id'] = $teacher;
-            $data = $this->courseRepository->create($data);
+            $data['image']= $awsUrl . $path;
 
-            return $this->success($data,'Cousre is added',201);
+           // $data = $this->courseRepository->create($data);
+
+           $course = $this->courseRepository->create($data);
+           $courses = new CourseResourse($course);
+
+           return $courses;
 
     }
 
@@ -66,7 +80,9 @@ class CourseController extends BaseApiController
 
     public function getcoursebyteacherid($id){
         $tacher = Teacher::find($id);
-        return $this->formatMany($tacher->course, 'App\Http\Resources\CourseResourse');
+        $courses = CourseResourse::collection($tacher->course );
+
+        return $courses;
 
     }
 

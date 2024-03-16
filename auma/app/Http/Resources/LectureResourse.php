@@ -15,15 +15,15 @@ class LectureResourse extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name ,
+            'description' => $this->description,
+        ];
     }
     public static function transformer(Lecture $lecture){
 
-        return [
-            'id' => $lecture->id,
-            'title' => $lecture->title ,
-            'description' => $lecture->description,
-        ];
+        
     }
 }
 

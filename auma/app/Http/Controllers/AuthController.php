@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Teacher;
+<<<<<<< HEAD
+=======
+use PharIo\Manifest\Url;
+>>>>>>> 0fce94d033a1b85425edba99a89b50fd36fa8bde
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -15,7 +19,13 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Http\Resources\AuthResource;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\Validator;
+<<<<<<< HEAD
+=======
+use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Support\Facades\Response;
+>>>>>>> 0fce94d033a1b85425edba99a89b50fd36fa8bde
 use App\Http\Controllers\API\BaseApiController;
+
 
 class AuthController extends BaseApiController
 {

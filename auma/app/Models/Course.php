@@ -14,16 +14,19 @@ class Course extends Model
         'title',
         'description',
         'category_id',
-        'teacher_id'
+        'teacher_id',
+        'book',
+        'image'
+
 
     ];
     public function users()
 {
-  return $this->belongsToMany(User::class,'user_course')->withTimestamps();
+  return $this->belongsToMany(User::class,'user_course');
 }
 public function user()
 {
-  return $this->belongsToMany(User::class,'favorites')->withTimestamps();
+  return $this->belongsToMany(User::class,'favorites');
 }
 
 
@@ -37,9 +40,9 @@ public function category(){
   return $this -> belongsTo(Category::class);
   }
 
-public function audio()
+public function lecture()
 {
-  return $this->hasMany(Audio::class);
+  return $this->hasMany(Lecture::class);
 }
 
 

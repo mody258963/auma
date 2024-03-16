@@ -21,14 +21,12 @@ class CategoryController extends BaseApiController
 
     public function index()
     {
-        return $this->success(
-            $this->formatMany(
-                $this->categoryRepository->all(),
-                'App\Http\Resources\CategoryResourse'
-            ),
-            "categories retreived succssefully",
-            200
-        );
+        $catogry = $this->categoryRepository->all();
+
+        return CategoryResourse::collection($catogry);
+          
+        
+  
 
 
     }
@@ -56,6 +54,8 @@ class CategoryController extends BaseApiController
             ])->validate();
 
             $data = $this->categoryRepository->create($data);
+
+            
 
             return $this->success($data,'Category is added',201);
 
