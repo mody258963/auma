@@ -41,7 +41,6 @@ Route::put('//courses/{userId}', [CourseController::class, 'update']);
 Route::delete('/courses/{userId}', [CourseController::class, 'destroy']);
 
 
-// audios ya s7by shyfny
 
 
 Route::get('/audios', [AudioController::class, 'index']);
@@ -55,13 +54,13 @@ Route::delete('/audios-delete/{id}', [AudioController::class, 'destroy']);
 
 
 
-
+Route::post('/user/{user}/favorite/{course}', [FavoriteController::class, 'addFavorite']);
 
     Route::get('/all-user', [AuthController::class, 'index']);
     Route::post('/admin/register', [AuthController::class, 'adminRegister']);
     Route::post('/email/change/{id}', [AuthController::class, 'emailupdate']);
     Route::post('/user/login', [AuthController::class, 'login']);
-    Route::post('/password/forget-password', [AuthController::class, 'forgetPassword']); // hena 27la ya 3bdooooo
+    Route::post('/password/forget-password', [AuthController::class, 'forgetPassword']);
     Route::delete('/user-delete/{id}', [AuthController::class, 'destroy']);
     Route::get('/search/teacher/{name}',[AuthController::class, 'searchteacher']);
 
@@ -113,8 +112,8 @@ Route::post('/update-lecture/{id}', [LectureController::class, 'update']);
 
 
 
-// rset passwerd ya 3m
 
 
-Route::post('/user/{user}/favorite/{course}', [FavoriteController::class, 'addFavorite']);
+
+
 

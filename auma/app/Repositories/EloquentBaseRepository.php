@@ -17,7 +17,7 @@ abstract class EloquentBaseRepository implements BaseRepository{
     public function create($data){
         return $this->model->create($data);
     }
-    
+
     public function where($id, $data){
         return  $this->model->where($id, '=', $data)->get();
     }
@@ -43,6 +43,6 @@ abstract class EloquentBaseRepository implements BaseRepository{
 
     public function all(){
         return $this->model->all();
-    }
+    }  
 
 }

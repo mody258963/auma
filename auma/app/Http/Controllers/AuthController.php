@@ -2,318 +2,192 @@
 
 namespace App\Http\Controllers;
 
-use to;
 use App\Models\User;
-use App\Models\Course;
 use App\Models\Teacher;
-// use App\Models\PasswordReset;
-// use App\Models\PasswordReset;
-use PharIo\Manifest\Url;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\PasswordReset;
+use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
-use Laravel\Sanctum\HasApiTokens;
-use App\Http\Resources\AuthResourse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Password;
+use Laravel\Sanctum\HasApiTokens;
+use App\Http\Resources\AuthResource;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Contracts\Auth\UserProvider;
 use App\Http\Controllers\API\BaseApiController;
 
 class AuthController extends BaseApiController
 {
-    // الووو
-    // i am here
-    /**
-     * Display a listing of the resource.
-     */
-
-     public function __construct(private UserRepository $userRepository)
+    public function __construct(private UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
+
     public function index()
     {
-        // return $this->success(
-        //     $this->formatMany(
-        //         $this->userRepository->all(),
-        //         'App\Http\Resources\AuthResourse'
-        //     ),
-        //     "categories retreived succssefully",
-        //     200
-        // );
-        $data = $this->formatMany($this->userRepository->all(), 'App\Http\Resources\AuthResourse');
+        $data = $this->formatMany($this->userRepository->all(), 'App\Http\Resources\AuthResource');
         return response()->json($data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function userRegister(Request $request)
     {
-            $data = $request->validate([
-                'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'password' => 'required' ,  // we must make valdation ya 3abdooooo
-                'cpassword' => 'required|same:password'
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+            'cpassword' => 'required|same:password',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+        ]);
 
-              ]);
-              $data['role'] = 'user' ;
-              $data['password'] = Hash::make($data['password']);
+        $data['role'] = 'user';
+        $data['password'] = Hash::make($data['password']);
 
+        $user = $this->userRepository->create($data);
 
-            $user = $this->userRepository->create($data);
+        $data = AuthResource::transformer($user);
 
-
-            $data = AuthResourse::transformer($user);
-
-            return response()->json(['user_id' => $user->id], 201);
+        return response()->json(['user_id' => $user->id], 201);
     }
 
     public function adminRegister(Request $request)
     {
-
-            $data = $request->validate([
-                'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'password' => 'required',
-                'cpassword' => 'required|same:password'
-
-
-              ]);
-              $data['role'] = 'admin' ;
-              $data['password'] = Hash::make($data['password']);
-
-            $user = $this->userRepository->create($data);
-
-            $data = AuthResourse::transformer($user);
-
-            return response()->json(['user_id' => $user->id], 201);
-    }
-
-    public function teacherRegister(Request $request){
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required', 
+            'password' => 'required',
             'cpassword' => 'required|same:password',
-            'link' => 'required|url:http,https'
-          ]);
-          $data['password'] = Hash::make($data['password']);
+        ]);
+
+        $data['role'] = 'admin';
+        $data['password'] = Hash::make($data['password']);
+
+        $user = $this->userRepository->create($data);
+
+        $data = AuthResource::transformer($user);
+
+        return response()->json(['user_id' => $user->id], 201);
+    }
+
+    public function teacherRegister(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+            'cpassword' => 'required|same:password',
+            'link' => 'required|url:http,https',
+        ]);
+
+        $data['password'] = Hash::make($data['password']);
 
         $user = Teacher::create($data);
 
         return response()->json(['user_id' => $user->id], 201);
     }
 
-    //search  teacher
-
-    function searchteacher($name)
+    public function searchTeacher($name)
     {
-        $teacher = Teacher::where('name',"like","%".$name."%")->get();
+        $teacher = Teacher::where('name', "like", "%" . $name . "%")->get();
         return response()->json($teacher);
-
     }
 
+    public function login(Request $request): Response
+    {
+        $credentials = $request->only('email', 'password');
 
-public function login(Request $request)
-{
-
-    $credentials = $request->only('email', 'password');
-
-    if (Auth::attempt($credentials)) {
-        $user = Auth::user();
-        return response()->json(['user_id' => $user->id], 201);
-    } else {
-        return response()->json(['message' => 'Invalid credentials'], 401);
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $success = $user->createToken('MyApp')->plainTextToken;
+            return response(['token' => $success], 200);
+        } else {
+            return response(['message' => 'Invalid credentials'], 401);
+        }
     }
-}
-
-
-// public function login(Request $request)
-// {
-//     $credentials = $request->only('email', 'password');
-
-//     if (Auth::attempt($credentials)) {
-//         $user = Auth::user();
-//         return response()->json(['user_id' => $user->id], 201);
-//     } else {
-//         return response()->json(['message' => 'Invalid credentials'], 401);
-//     }
-// }
-
-
-    // public function passwordupdate(Request $request, $id)
-    // {
-    //     $data = Validator::make($request->all(), [
-    //         'password' => 'required', // why we need title for user ?
-    //         'confirm_password' => 'required',
-
-    //         ])->safe()->all();
-    // $user = $this->userRepository->find($id);
-
-
-    // $data =  $this->userRepository->update($data,$user);
-
-
-
-    // return $this->success($this->formatMany(
-    //     $this->userRepository->all(),
-    // 'App\Http\Resources\AuthResourse'),
-    // 'Updated Succesfully',201);
-
-    // }
-
-    // de 3ysen n3mlaha bel email zy el 2nta 3mlto
-
-
-    // reset password ya gamed
-
-
-
-
-
 
     public function forgetPassword(Request $request)
-{
-    try {
-        $user = User::where('email', $request->email)->first();
+    {
+        try {
+            $user = User::where('email', $request->email)->first();
 
-        if ($user) {
-            $token = Str::random(40);
+            if ($user) {
+                $token = Str::random(40);
+                $domain = url('/');
+                $url = $domain . '/reset-password?token=' . $token;
+                $data['url'] = $url;
+                $data['email'] = $request->email;
+                $data['title'] = "Password Reset";
+                $data['body'] = "Please click on the link below to reset your password.";
 
-            $domain = url('/');
-            $url = $domain . '/reset-password?token=' . $token;
+                Mail::send('forgetPasswordMail', ['data' => $data], function ($message) use ($data) {
+                    $message->to($data['email'])->subject($data['title']);
+                });
 
-            $data['url'] = $url;
-            $data['email'] = $request->email;
-            $data['title'] = "Password Reset";
-            $data['body'] = "Please click on the link below to reset your password ya 3amm";
+                $datetime = Carbon::now()->format('Y-m-d H:i:s');
 
-            Mail::send('forgetPasswordMail', ['data' => $data], function ($message) use ($data) {
-                $message->to($data['email'])->subject($data['title']);
-            });
+                PasswordReset::updateOrCreate(
+                    ['email' => $request->email],
+                    [
+                        'email' => $request->email,
+                        'token' => $token,
+                        'created_at' => $datetime
+                    ]
+                );
 
-            $datetime = Carbon::now()->format('Y-m-d H:i:s');
-
-            PasswordReset::updateOrCreate(
-                ['email' => $request->email],
-
-                [
-                    'email' => $request->email,
-                    'token' => $token,
-                    'created_at' => $datetime
-                ]
-            );
-
-            return response()->json(['success' => true, 'msg' => 'Please check your email to reset your password ya 3amm']);
-        } else {
-            return response()->json(['success' => false, 'msg' => 'User not found ya 3amm']);
+                return response()->json(['success' => true, 'msg' => 'Please check your email to reset your password.']);
+            } else {
+                return response()->json(['success' => false, 'msg' => 'User not found.']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'msg' => $e->getMessage()]);
         }
-    } catch (\Exception $e) {
-        return response()->json(['success' => false, 'msg' => $e->getMessage()]);
     }
 
+    public function resetPasswordLoad(Request $request)
+    {
+        $resetData = PasswordReset::where('token', $request->token)->get();
+        if (isset($request->token) && count($resetData) > 0) {
+            $user = User::where('email', $resetData[0]['email'])->get();
+            return view('resetPassword', compact('user'));
+        } else {
+            return view('404');
+        }
+    }
 
-
-
-
-
-}       
-
-      //reset password load
-
-      public function resetPasswordLoad(Request $requset){
-
-         $resetData = PasswordReset::where('token' , $requset->token)->get();
-          if (isset($requset->token) && count( $resetData) > 0) {
-
-           $user = User::where('email',$resetData[0]['email'])->get();
-
-           return view('resetPassword' ,compact('user'));
-
-          } else {
-             return view('404');
-          }
-
-
-
-
-
-      }
-
-      //password Reset
-      public function resetPassword(Request $requset){
-          $requset->validate([
-             'password' => 'required|string|min:8|confirmed'
-          ]);
-          $user =User::find($requset->id);
-          $user->password =  Hash::make($requset->password);
-          $user->save();
-         PasswordReset::where('email' ,$user->email)->delete();
-
-                        return view('success');
-
-
-      }
-
-
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|string|min:8|confirmed'
+        ]);
+        $user = User::find($request->id);
+        $user->password =  Hash::make($request->password);
+        $user->save();
+        PasswordReset::where('email', $user->email)->delete();
+        return view('success');
+    }
 
     public function emailupdate(Request $request, $id)
     {
         $data = Validator::make($request->all(), [
-            'email' => 'required|email', // why we need title for user ?
+            'email' => 'required|email',
             'confirm_email' => 'required|email|same:email',
             'password' => 'required',
             'id' => 'required'
-            ])->validate();
+        ])->validate();
 
-            $user = $this->userRepository->find($id);
-            $data['id'] = $id;
-            $credentials = $request->only('id','password');
-
-            if(Auth::attempt($credentials)){
-                $request->except(['confirm_email','password','id']);
-                $this->userRepository->update($data,$user);
-
-
-
-        return $this->success($this->formatMany(
-        $this->userRepository->all(),
-        'App\Http\Resources\AuthResourse'),
-        'Updated Succesfully',201);
-    }else {
-        return $this->error('Wrong input');
-    }
-    }
-
-    // public function getcousebyteachername(Request $request)
-    // {
-    //     $categoryName = $request->input('title');
-
-    //     $category = Course::query();
-
-    //     if ($categoryName) {
-    //         $category->join('categories', 'categories.id', '=', 'courses.user_id')
-    //         ->where('categories.title', $categoryName);
-    //     }
-
-    //     $filteredcategory = $category->get();
-
-    //     return response()->json(['category' => $filteredcategory]);
-    // }
-
-    public function destroy($id)
-    {
         $user = $this->userRepository->find($id);
-        $this->userRepository->delete($user);
-        return $this->success($this->formatMany(
-            $this->userRepository->all(),
-        'App\Http\Resources\userResourse'),
-        'Updated Succesfully',201);
-    }
-}
+        $data['id'] = $id;
+        $credentials = $request->only('id', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $request->except(['confirm_email', 'password', 'id']);
+            $this->userRepository->update($data, $user);
+
+            return $this->success(
+                $this->formatMany(
+                    $this->userRepository->all(),
+                    'App\Http\Resources\AuthResource'
+                ),
+                'Updated Successfully',
+                201
+            );

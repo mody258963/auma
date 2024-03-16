@@ -13,25 +13,7 @@ use App\Models\Lecture;
 use App\Repositories\Audio\AudioRepository;
 use Illuminate\Support\Facades\Storage;
 
-// look here
-// i have many courses
-// every course has many lectures -> their is no lectures -- lestien form me i know your idea be flixable
-// every lecture has audios or files or videos
-// any thing i add type of media over all
-// this type i response with it to front end to represent this content
-// then i need add leacture with title and option description
-// overall i have three entities
-// user -> (admin, instructor, student or user)
-// course (has many lectures) columns:(title, description, sub_description, cover, short video)
-// leactures (has mmany contents and belongs to course) columns: (name, description(option))
-// contents (belongs to lectures) columns:(content(video, audio, file),type of media)
 
-// that is very simple to generate this system without any complexity
-
-// sorry
-// uploding file give it a look please :)   are you still here// i here
-// okay
-// revesion theses comments
 
 
 
@@ -59,14 +41,13 @@ class AudioController extends BaseApiController
     public function store(Request $request,$id)
     {
 
-        $path = $request->file('file_path')->store('public/images');
-        // $path = Storage::disk('public')->put('uploads', $file);
-        // $data['file_path'] = $path;
+        $path = $request->file('file_path')->storePublicly('public/image');
+
         $data = $request->validate([
             'title' => 'required',
         ]);
         $data['lecture_id'] = $id;
-        $data['file_path']= "https://uamh-laravel.s3.amazonaws.com/$path";
+        $data['file_path']= "https://aumalaravel.s3.amazonaws.com/$path";
 
          $audio = $this->audioRepository->create($data);
 
@@ -84,33 +65,7 @@ class AudioController extends BaseApiController
     }
 
 
-    // public function update(Request $request , $id)
-    // {
-    //     $audio = $this->audioRepository->find($id);
 
-    //     if($request['file_path']){
-    //         // $file = $data['file_path'];
-    //         $file =  Audio::find($id, ['file_path']);
-    //         $var = $file['file_path'];
-    //         $str = str_replace('https://uamh-laravel.s3.amazonaws.com/','',$var);
-    //         Storage::disk('s3')->delete($str);
-
-    //         $path = $request->file('file_path')->store('public/images');
-    //         $data['file_path']= "https://uamh-laravel.s3.amazonaws.com/$path";
-    //     }
-    //     $data = Validator::make($request->all(), [
-    //         'title' => 'required|string',
-    //         'file_path' => 'required|file',
-    //         ])->safe()->all();
-
-    //         $data =  $this->audioRepository->update($audio, $data);
-
-    //     return $this->success($this->formatMany(
-    //         $this->audioRepository->all(),
-    //     'App\Http\Resources\AudioResourse'),
-    //     'Updated Succesfully',201);
-
-    // }
 
     public function update(Request $request, $id)
 {
@@ -134,13 +89,13 @@ class AudioController extends BaseApiController
 
 
         if ($currentFilePath) {
-            $filePath = str_replace('https://uamh-laravel.s3.amazonaws.com/', '', $currentFilePath);
+            $filePath = str_replace('https://aumalaravel.s3.amazonaws.com/', '', $currentFilePath);
             Storage::disk('s3')->delete($filePath);
         }
 
 
-        $path = $request->file('file_path')->storePublicly('public/images');
-        $audio->file_path = "https://uamh-laravel.s3.amazonaws.com/$path";
+        $path = $request->file('file_path')->storePublicly('public/image');
+        $audio->file_path = "https://aumalaravel.s3.amazonaws.com/$path";
     }
 
 
@@ -181,3 +136,10 @@ class AudioController extends BaseApiController
 
 
 }
+
+
+
+
+
+
+

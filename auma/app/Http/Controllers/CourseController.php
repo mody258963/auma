@@ -21,7 +21,7 @@ class CourseController extends BaseApiController
 
     public function index()
     {
-        // return $this->success(
+        /* // return $this->success(
         //     $this->formatMany(
         //         $this->courseRepository->all(),
         //         'App\Http\Resources\CourseResourse'
@@ -29,7 +29,7 @@ class CourseController extends BaseApiController
         //     "categories retreived succssefully",
         //     200
         // );
-
+ */
         $data = $this->formatMany($this->courseRepository->all(), 'App\Http\Resources\AuthResourse');
         return response()->json($data);
     }
@@ -112,7 +112,7 @@ class CourseController extends BaseApiController
         return response()->json(['error' => 'User not found'], 404);
     }
 
-    
+
     $user->course()->detach($courseId);
 
     return response()->json(['message' => 'Course removed from favorites successfully'], 200);
