@@ -47,9 +47,14 @@ class LectureController extends BaseApiController
 
         $course = Course::find($courseid);
         
-        $courses =  LectureResourse::collection($course->lecture);
 
-        return $courses;
+     if (!$course) {
+        return response()->json(['message' => 'Course not found'], 404);
+    }
+
+    $lectures = $course->lecture()->orderBy('id', 'asc')->get();
+
+    return LectureResourse::collection($lectures);
     }
 
 

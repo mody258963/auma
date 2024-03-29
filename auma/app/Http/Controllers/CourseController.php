@@ -30,13 +30,12 @@ class CourseController extends BaseApiController
         //     "categories retreived succssefully",
         //     200
         // );
-<<<<<<< HEAD
  */
         $data = $this->formatMany($this->courseRepository->all(), 'App\Http\Resources\AuthResourse');
-=======
+
 
         $data = $this->formatMany($this->courseRepository->all(), 'App\Http\Resources\CourseResource');
->>>>>>> 0fce94d033a1b85425edba99a89b50fd36fa8bde
+
         return response()->json($data);
     }
 

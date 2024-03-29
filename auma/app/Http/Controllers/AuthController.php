@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Teacher;
-<<<<<<< HEAD
-=======
 use PharIo\Manifest\Url;
->>>>>>> 0fce94d033a1b85425edba99a89b50fd36fa8bde
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -16,15 +13,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Sanctum\HasApiTokens;
-use App\Http\Resources\AuthResource;
+use App\Http\Resources\AuthResourse;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\Validator;
-<<<<<<< HEAD
-=======
 use Illuminate\Contracts\Auth\UserProvider;
-use Illuminate\Support\Facades\Response;
->>>>>>> 0fce94d033a1b85425edba99a89b50fd36fa8bde
 use App\Http\Controllers\API\BaseApiController;
+use App\Models\PasswordReset;
+
 
 
 class AuthController extends BaseApiController
@@ -55,7 +50,7 @@ class AuthController extends BaseApiController
 
         $user = $this->userRepository->create($data);
 
-        $data = AuthResource::transformer($user);
+        $data = AuthResourse::transformer($user);
 
         return response()->json(['user_id' => $user->id], 201);
     }
@@ -74,7 +69,7 @@ class AuthController extends BaseApiController
 
         $user = $this->userRepository->create($data);
 
-        $data = AuthResource::transformer($user);
+        $data = AuthResourse::transformer($user);
 
         return response()->json(['user_id' => $user->id], 201);
     }
@@ -201,3 +196,6 @@ class AuthController extends BaseApiController
                 'Updated Successfully',
                 201
             );
+        }
+    }
+}

@@ -116,18 +116,13 @@ Route::post('/update-lecture/{id}', [LectureController::class, 'update']);
 
 
 
-<<<<<<< HEAD
 
-
-
-
-=======
 
 // rset passwerd ya 3m
 
 
 // Route::post('/user/{user}/favorite/{course}', [FavoriteController::class, 'addFavorite']);
->>>>>>> 0fce94d033a1b85425edba99a89b50fd36fa8bde
+
 
 Route::get('/soso/', function(){
     $client = new Client();

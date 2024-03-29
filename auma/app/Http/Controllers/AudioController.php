@@ -40,28 +40,24 @@ class AudioController extends BaseApiController
 
     public function store(Request $request,$id)
     {
-
-<<<<<<< HEAD
+        $awsUrl = config('filesystems.disks.s3.url');
         $path = $request->file('file_path')->storePublicly('public/image');
-
-=======
-        
         $path = $request->file('file_path')->storePublicly('public/images');
         // $path = Storage::disk('public')->put('uploads', $file);
         // $data['file_path'] = $path;
->>>>>>> 0fce94d033a1b85425edba99a89b50fd36fa8bde
         $data = $request->validate([
             'title' => 'required',
         ]);
         $data['lecture_id'] = $id;
-        $data['file_path']= "https://aumalaravel.s3.amazonaws.com/$path";
-
+        $data['file_path']= $awsUrl . $path;
          $audio = $this->audioRepository->create($data);
 
-         $data = AudioResourse::transformer($audio);
+         $data = new AudioResourse($audio);
 
         return response()->json($data);
-
+      
+       
+       
 
      }
 
@@ -124,8 +120,8 @@ class AudioController extends BaseApiController
     public function getaudiowithlecture($lectureid){
         $lecture = Lecture::find($lectureid);
         $audio = $lecture->audio;
-        $data = $this->formatMany($audio,'App\Http\Resources\AudioResourse');
-        return response()->json($data);
+        $data = AudioResourse::collection($audio);
+        return $data;
     }
 
     public function destroy($id)
